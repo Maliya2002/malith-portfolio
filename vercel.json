@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "buildCommand": "react-scripts build",
+  "outputDirectory": "build",
+  "env": {
+    "CI": "false",
+    "GENERATE_SOURCEMAP": "false"
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
