@@ -68,3 +68,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## 🚀 Projects
+
+| # | Project | Description | Tech | Link |
+|---|---------|-------------|------|------|
+| 01 | 🏪 Upul Stores POS | Enterprise Smart POS System | Next.js, TypeScript, Prisma, PostgreSQL | [GitHub](https://github.com/Maliya2002/upul-stores-pos) |
+| 02 | 🗓️ UNISLOT | University Academic Scheduling System | React, Node.js, MongoDB | [GitHub](https://github.com/kezu1003/UNISLOT---University-Academic-Scheduling-Resource-Management-System) |
+| 03 | 📚 SLIIT LMS | Learning Management System | React, Node.js, MongoDB | [Live](https://sliit-lms.vercel.app) |
+| 04 | 🛕 Buddhist Center | Official Website | HTML, CSS, JavaScript | [Live](https://boraluketiya-buddhist-center.vercel.app) |
+| 05 | 🏫 Smart Campus | Campus Management System | React, JavaScript, Node.js | [GitHub](https://github.com/maliya2002/it3030-paf-2026-smart-campus-group89) |
+| 06 | 🛍️ ShopNex | E-Commerce Web Application | MongoDB, Express, React, Node.js | [GitHub](https://github.com/maliya2002/shopnex) |

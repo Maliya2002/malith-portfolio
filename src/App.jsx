@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Background from "./components/Background";
+import Scene3D from "./components/Scene3D";
+import MouseTrail from "./components/MouseTrail";
 import Cursor from "./components/Cursor";
 import Loader from "./components/Loader";
 import ScrollIndicator from "./components/ScrollIndicator";
@@ -24,7 +25,8 @@ function App() {
         <Loader onComplete={() => setLoading(false)} />
       ) : (
         <>
-          <Background />
+          <Scene3D />
+          <MouseTrail />
           <Cursor />
           <ScrollIndicator />
           <BackToTop />
