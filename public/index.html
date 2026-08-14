@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Malith Madushan | Full Stack Web Developer | SLIIT</title>
-<meta name="description" content="3rd Year IT Undergraduate at SLIIT. Full Stack Developer specializing in React, Node.js, MongoDB. Open to internship opportunities." />
-<meta name="keywords" content="Malith Madushan, Full Stack Developer, React, Node.js, SLIIT, Web Developer Sri Lanka, Internship" />
-<meta property="og:title" content="Malith Madushan | Full Stack Developer" />
-<meta property="og:description" content="Portfolio of Malith Madushan - Full Stack Web Developer" />
-<meta property="og:image" content="/malith.png" />
-<meta property="og:url" content="https://malithmadushan.vercel.app" />
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050505" />
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+  <title>Malith Madushan | Full Stack Developer</title>
+  <meta name="description" content="Malith Madushan - Full Stack Web Developer" />
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+  <!-- CRITICAL: Force top on every load -->
+  <script>
+    // Disable browser scroll restoration IMMEDIATELY
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    // Clear any hash from URL
+    if (window.location.hash) {
+      history.replaceState(null, null, window.location.pathname);
+    }
+
+    // Force scroll to top
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  </script>
+</head>
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+
+  <script>
+    // Force top after page load
+    window.addEventListener('load', function() {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    });
+  </script>
+</body>
 </html>

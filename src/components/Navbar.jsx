@@ -28,7 +28,13 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
         <MagneticLink strength={0.2}>
-          <Link to="home" smooth className="hover-trigger cursor-pointer">
+          <Link
+            to="home"
+            smooth
+            duration={600}
+            hashSpy={false}
+            className="hover-trigger cursor-pointer"
+          >
             <span className="font-display font-bold text-xl text-white">
               M<span className="text-blue">.</span>
             </span>
@@ -44,6 +50,7 @@ const Navbar = () => {
                 to={l}
                 smooth
                 spy
+                hashSpy={false}
                 duration={600}
                 offset={-80}
                 activeClass="!text-white"
@@ -82,14 +89,18 @@ const Navbar = () => {
               smooth
               duration={600}
               offset={-80}
+              hashSpy={false}
               onClick={() => setOpen(false)}
               className="block text-slate-300 text-lg py-3 uppercase tracking-wider hover:text-white transition-colors hover-trigger"
             >
               {l}
             </Link>
           ))}
-          <a href="/Malith_Madushan_Resume.pdf" download
-            className="block mt-4 bg-blue text-white text-sm font-bold px-6 py-3 rounded-full text-center hover-trigger">
+          <a
+            href="/Malith_Madushan_Resume.pdf"
+            download
+            className="block mt-4 bg-blue text-white text-sm font-bold px-6 py-3 rounded-full text-center hover-trigger"
+          >
             Resume
           </a>
         </motion.div>

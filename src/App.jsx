@@ -26,73 +26,105 @@ import Footer from "./components/Footer";
 function App() {
   const [loading, setLoading] = useState(true);
 
-  // Force scroll to top on mount
+  // FORCE SCROLL TO TOP - RUNS IMMEDIATELY
   useEffect(() => {
-    // Disable browser scroll restoration
+    // Disable scroll restoration
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
 
-    // Force to top
-    window.scrollTo(0, 0);
+    // Remove any hash
+    if (window.location.hash) {
+      window.history.replaceState(null, null, window.location.pathname);
+    }
 
     // Prevent scroll during loading
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = "0";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.bottom = "0";
 
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.bottom = "";
     };
   }, []);
 
   const handleLoaderComplete = () => {
+    // Remove all scroll restrictions
+    document.body.style.overflow = "";
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.bottom = "";
+
+    // Force scroll to absolute top
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Now show the content
     setLoading(false);
 
-    // Multiple scroll attempts to ensure top
-    document.body.style.overflow = "auto";
-    window.scrollTo(0, 0);
+    // Force top again after render
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
 
-    setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    }, 50);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+      }, 100);
 
-    setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    }, 200);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 300);
+
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 600);
+    });
   };
 
+  if (loading) {
+    return <Loader onComplete={handleLoaderComplete} />;
+  }
+
   return (
-    <>
-      {loading ? (
-        <Loader onComplete={handleLoaderComplete} />
-      ) : (
-        <>
-          <Scene3D />
-          <MouseTrail />
-          <Cursor />
-          <ScrollIndicator />
-          <BackToTop />
-          <CommandPalette />
-          <ThemeToggle />
-          <MusicPlayer />
-          <Navbar />
-          <main className="relative z-10">
-            <Hero />
-            <Marquee />
-            <About />
-            <Skills />
-            <SkillsGlobe />
-            <Work />
-            <Experience />
-            <GitHubStats />
-            <Certifications />
-            <Testimonials />
-            <Terminal />
-            <Contact />
-          </main>
-          <Footer />
-        </>
-      )}
-    </>
+    <div className="relative">
+      <Scene3D />
+      <MouseTrail />
+      <Cursor />
+      <ScrollIndicator />
+      <BackToTop />
+      <CommandPalette />
+      <ThemeToggle />
+      <MusicPlayer />
+      <Navbar />
+      <main className="relative z-10">
+        <Hero />
+        <Marquee />
+        <About />
+        <Skills />
+        <SkillsGlobe />
+        <Work />
+        <Experience />
+        <GitHubStats />
+        <Certifications />
+        <Testimonials />
+        <Terminal />
+        <Contact />
+      </main>
+      <Footer />
+    </div>
   );
 }
 
