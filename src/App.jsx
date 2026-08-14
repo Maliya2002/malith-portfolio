@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Scene3D from "./components/Scene3D";
 import MouseTrail from "./components/MouseTrail";
 import Cursor from "./components/Cursor";
@@ -26,10 +26,44 @@ import Footer from "./components/Footer";
 function App() {
   const [loading, setLoading] = useState(true);
 
+  // Force scroll to top on mount
+  useEffect(() => {
+    // Disable browser scroll restoration
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    // Force to top
+    window.scrollTo(0, 0);
+
+    // Prevent scroll during loading
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
+  const handleLoaderComplete = () => {
+    setLoading(false);
+
+    // Multiple scroll attempts to ensure top
+    document.body.style.overflow = "auto";
+    window.scrollTo(0, 0);
+
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }, 50);
+
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }, 200);
+  };
+
   return (
     <>
       {loading ? (
-        <Loader onComplete={() => setLoading(false)} />
+        <Loader onComplete={handleLoaderComplete} />
       ) : (
         <>
           <Scene3D />

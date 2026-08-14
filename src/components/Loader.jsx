@@ -6,17 +6,26 @@ const Loader = ({ onComplete }) => {
   const [exit, setExit] = useState(false);
 
   useEffect(() => {
+    // Force to top when loader mounts
+    window.scrollTo(0, 0);
+
     const t = setInterval(() => {
       setCount((p) => {
         if (p >= 100) {
           clearInterval(t);
-          setTimeout(() => setExit(true), 150);
-          setTimeout(() => onComplete(), 700);
+          setTimeout(() => {
+            window.scrollTo(0, 0);  // Force top before exit
+            setExit(true);
+          }, 150);
+          setTimeout(() => {
+            window.scrollTo(0, 0);  // Force top before complete
+            onComplete();
+          }, 700);
           return 100;
         }
-        return p + 4;  // Faster increment
+        return p + 4;
       });
-    }, 10);  // Faster interval
+    }, 10);
     return () => clearInterval(t);
   }, [onComplete]);
 

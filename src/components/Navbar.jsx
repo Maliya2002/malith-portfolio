@@ -26,7 +26,7 @@ const Navbar = () => {
         scrolled ? "bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.06]" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
         <MagneticLink strength={0.2}>
           <Link to="home" smooth className="hover-trigger cursor-pointer">
             <span className="font-display font-bold text-xl text-white">

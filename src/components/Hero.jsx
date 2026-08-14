@@ -14,26 +14,29 @@ const Hero = () => {
   });
 
   return (
-    <section id="home" className="min-h-screen flex items-center relative overflow-hidden pt-20 lg:pt-0">
+    <section
+      id="home"
+      className="min-h-screen w-full flex items-center relative overflow-hidden pt-32 pb-20 lg:pt-24 lg:pb-16"
+    >
       {/* Giant Background Text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
         <motion.h1
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 0.02 }}
           transition={{ duration: 3, delay: 2 }}
-          className="font-display text-[20vw] font-bold text-white whitespace-nowrap"
+          className="font-display text-[18vw] font-bold text-white whitespace-nowrap"
         >
           DEVELOPER
         </motion.h1>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 w-full">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
 
           {/* LEFT — Text Content */}
-          <div className="lg:col-span-7">
-            {/* Status */}
-            <motion.div {...a(1.8)} className="flex items-center gap-3 mb-10">
+          <div className="lg:col-span-7 order-2 lg:order-1">
+            {/* Status Badge */}
+            <motion.div {...a(1.8)} className="flex items-center gap-3 mb-8">
               <div className="relative">
                 <div className="w-2 h-2 rounded-full bg-green-400" />
                 <div className="w-2 h-2 rounded-full bg-green-400 absolute inset-0 animate-ping" />
@@ -50,28 +53,37 @@ const Hero = () => {
               </p>
             </motion.div>
 
-            {/* Name */}
+            {/* Name — First Line */}
             <motion.h1
               {...a(2.2)}
-              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.92] tracking-[-0.04em] mb-3"
+              className="font-display font-bold leading-[0.95] tracking-[-0.04em] mb-2"
+              style={{
+                fontSize: "clamp(3rem, 8vw, 5.5rem)",
+              }}
             >
-              <span className="text-white">Malith</span>
+              <span className="text-white block">Malith</span>
             </motion.h1>
 
+            {/* Name — Second Line */}
             <motion.h1
               {...a(2.4)}
-              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.92] tracking-[-0.04em] mb-8"
+              className="font-display font-bold leading-[0.95] tracking-[-0.04em] mb-8"
+              style={{
+                fontSize: "clamp(3rem, 8vw, 5.5rem)",
+              }}
             >
               <span
-                className="text-transparent"
-                style={{ WebkitTextStroke: "2px rgba(255,255,255,0.2)" }}
+                className="text-transparent block"
+                style={{
+                  WebkitTextStroke: "2px rgba(255,255,255,0.2)",
+                }}
               >
                 Madushan
               </span>
             </motion.h1>
 
-            {/* Role with typing */}
-            <motion.div {...a(2.6)} className="flex items-center gap-4 mb-8">
+            {/* Role */}
+            <motion.div {...a(2.6)} className="flex items-center gap-4 mb-6">
               <div className="w-16 h-[1px] bg-blue" />
               <TypeAnimation
                 sequence={[
@@ -83,21 +95,21 @@ const Hero = () => {
                 wrapper="span"
                 speed={40}
                 repeat={Infinity}
-                className="text-slate-300 text-lg font-body"
+                className="text-slate-300 text-base md:text-lg font-body"
               />
             </motion.div>
 
             {/* Description */}
             <motion.p
               {...a(2.8)}
-              className="text-slate-400 text-base md:text-lg max-w-lg leading-relaxed mb-12"
+              className="text-slate-400 text-base md:text-lg max-w-lg leading-relaxed mb-10"
             >
               3rd Year IT Undergraduate at SLIIT, crafting immersive web experiences
               with clean code, stunning visuals, and cutting-edge technologies.
             </motion.p>
 
             {/* CTA Buttons */}
-            <motion.div {...a(3.0)} className="flex flex-wrap items-center gap-4 mb-16">
+            <motion.div {...a(3.0)} className="flex flex-wrap items-center gap-4 mb-12">
               <MagneticLink strength={0.2}>
                 <Link to="work" smooth duration={600} offset={-80}>
                   <button className="group bg-blue hover:bg-white text-white hover:text-black px-8 py-4 rounded-full text-sm font-bold flex items-center gap-3 transition-all duration-500 hover-trigger">
@@ -149,9 +161,9 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* RIGHT — Photo with 3D Animation */}
+          {/* RIGHT — Photo */}
           <motion.div
-            className="lg:col-span-5 h-[500px] lg:h-[600px] flex items-center justify-center"
+            className="lg:col-span-5 h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center order-1 lg:order-2"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 2.5, duration: 1.5 }}
@@ -166,7 +178,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 4 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <Link to="about" smooth duration={600} offset={-80} className="cursor-pointer hover-trigger">
           <motion.div
@@ -174,13 +186,13 @@ const Hero = () => {
             transition={{ duration: 2.5, repeat: Infinity }}
             className="flex flex-col items-center gap-3"
           >
-            <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-white/15 to-white/5" />
+            <div className="w-[1px] h-10 bg-gradient-to-b from-transparent via-white/15 to-white/5" />
             <FiArrowDown className="text-slate-500" size={14} />
           </motion.div>
         </Link>
       </motion.div>
 
-      {/* Side Text */}
+      {/* Side Vertical Text */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
