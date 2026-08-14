@@ -10,13 +10,13 @@ const Loader = ({ onComplete }) => {
       setCount((p) => {
         if (p >= 100) {
           clearInterval(t);
-          setTimeout(() => setExit(true), 200);
-          setTimeout(() => onComplete(), 800);
+          setTimeout(() => setExit(true), 150);
+          setTimeout(() => onComplete(), 700);
           return 100;
         }
-        return p + 2;
+        return p + 4;  // Faster increment
       });
-    }, 15);
+    }, 10);  // Faster interval
     return () => clearInterval(t);
   }, [onComplete]);
 
@@ -25,7 +25,7 @@ const Loader = ({ onComplete }) => {
       className="fixed inset-0 z-[10000] flex items-center justify-center"
       style={{ background: "#050505" }}
       animate={exit ? { y: "-100%" } : { y: "0%" }}
-      transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+      transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
     >
       <motion.span
         initial={{ opacity: 0 }}
@@ -42,11 +42,11 @@ const Loader = ({ onComplete }) => {
             <span className="text-slate-400 text-[10px] font-mono">{count}%</span>
           </div>
           <div className="h-[1px] bg-white/[0.06] overflow-hidden">
-            <div className="h-full bg-blue transition-all duration-100" style={{ width: `${count}%` }} />
+            <div className="h-full bg-blue transition-all duration-75" style={{ width: `${count}%` }} />
           </div>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
           <h1 className="font-display text-xl font-bold text-slate-200 tracking-tight mb-1">Malith Madushan</h1>
           <p className="text-slate-500 text-[9px] font-mono tracking-[0.4em] uppercase">Portfolio</p>
         </motion.div>

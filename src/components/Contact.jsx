@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import emailjs from "@emailjs/browser";
 import { FiSend, FiMail, FiLinkedin, FiGithub, FiCheck, FiArrowUpRight, FiAlertCircle } from "react-icons/fi";
 
 const Contact = () => {
@@ -9,17 +10,26 @@ const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("idle");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
-    const subject = `Portfolio Message from ${form.name}`;
-    const body = `Name: ${form.name}%0AEmail: ${form.email}%0A%0A${form.message}`;
-    window.open(`mailto:malithmadushan25@gmail.com?subject=${subject}&body=${body}`);
-    setTimeout(() => {
+
+    try {
+      await emailjs.sendForm(
+        "service_b9cuwb4",           // Service ID
+        "template_r6ikwxt",          // Template ID
+        formRef.current,
+        "HvWSoaNi9OrKZSEW_"          // Public Key
+      );
+
       setStatus("sent");
       setForm({ name: "", email: "", message: "" });
       setTimeout(() => setStatus("idle"), 5000);
-    }, 800);
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+    }
   };
 
   const a = (d) => ({
@@ -38,7 +48,7 @@ const Contact = () => {
     <section id="contact" className="py-40 section-alt" ref={ref}>
       <div className="max-w-7xl mx-auto px-8">
         <motion.div {...a(0)} className="flex items-center gap-4 mb-20">
-          <span className="text-blue text-xs font-mono tracking-[0.2em]">05</span>
+          <span className="text-blue text-xs font-mono tracking-[0.2em]">08</span>
           <div className="h-[1px] flex-1 max-w-[60px] bg-white/10" />
           <span className="text-slate-500 text-xs font-mono tracking-[0.2em] uppercase">Contact</span>
         </motion.div>
@@ -48,7 +58,7 @@ const Contact = () => {
         </motion.h2>
 
         <motion.p {...a(0.2)} className="text-slate-400 text-lg max-w-lg mb-20 leading-relaxed">
-          Have an internship opportunity or project in mind? I'd love to hear from you.
+          Have an internship opportunity or project in mind? Send me a message directly!
         </motion.p>
 
         <div className="grid lg:grid-cols-5 gap-16">
@@ -91,7 +101,7 @@ const Contact = () => {
           <motion.div {...a(0.4)} className="lg:col-span-3">
             <div className="filled-card rounded-2xl p-8 md:p-10 corner-decoration">
               <h3 className="font-display text-xl font-bold text-white mb-2">Send a message</h3>
-              <p className="text-slate-400 text-sm mb-8">Your message will be sent directly to my email.</p>
+              <p className="text-slate-400 text-sm mb-8">Your message goes directly to my inbox 📬</p>
 
               {status === "sent" && (
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-16">
@@ -99,7 +109,17 @@ const Contact = () => {
                     <FiCheck size={28} className="text-green" />
                   </div>
                   <h4 className="font-display text-xl font-bold text-white mb-2">Message Sent! ✅</h4>
-                  <p className="text-slate-400 text-sm">Thanks for reaching out. I'll reply soon.</p>
+                  <p className="text-slate-400 text-sm">Thanks! I'll reply within 24 hours.</p>
+                </motion.div>
+              )}
+
+              {status === "error" && (
+                <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-16">
+                  <div className="w-16 h-16 rounded-full border border-red-500/20 bg-red-500/5 flex items-center justify-center mx-auto mb-6">
+                    <FiAlertCircle size={28} className="text-red-400" />
+                  </div>
+                  <h4 className="font-display text-xl font-bold text-white mb-2">Failed to send</h4>
+                  <p className="text-slate-400 text-sm">Please try again or email me directly.</p>
                 </motion.div>
               )}
 
@@ -108,26 +128,61 @@ const Contact = () => {
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
                       <label className="text-slate-500 text-[10px] font-mono tracking-[0.2em] mb-3 block uppercase">Name</label>
-                      <input type="text" name="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Your name" required className="form-field hover-trigger" />
+                      <input
+                        type="text"
+                        name="name"
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        placeholder="Your name"
+                        required
+                        className="form-field hover-trigger"
+                      />
                     </div>
                     <div>
                       <label className="text-slate-500 text-[10px] font-mono tracking-[0.2em] mb-3 block uppercase">Email</label>
-                      <input type="email" name="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="your@email.com" required className="form-field hover-trigger" />
+                      <input
+                        type="email"
+                        name="email"
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        placeholder="your@email.com"
+                        required
+                        className="form-field hover-trigger"
+                      />
                     </div>
                   </div>
                   <div>
                     <label className="text-slate-500 text-[10px] font-mono tracking-[0.2em] mb-3 block uppercase">Message</label>
-                    <textarea name="message" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tell me about your opportunity..." required className="form-field hover-trigger" rows={5} />
+                    <textarea
+                      name="message"
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      placeholder="Tell me about your opportunity..."
+                      required
+                      className="form-field hover-trigger"
+                      rows={5}
+                    />
                   </div>
-                  <button type="submit" disabled={status === "sending"}
-                    className="bg-blue hover:bg-white text-white hover:text-black w-full py-4 rounded-xl text-sm font-bold flex items-center justify-center gap-3 transition-all duration-500 hover-trigger disabled:opacity-50">
+                  <button
+                    type="submit"
+                    disabled={status === "sending"}
+                    className="bg-blue hover:bg-white text-white hover:text-black w-full py-4 rounded-xl text-sm font-bold flex items-center justify-center gap-3 transition-all duration-500 hover-trigger disabled:opacity-50"
+                  >
                     {status === "sending" ? (
-                      <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Sending...</>
+                      <>
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Sending...
+                      </>
                     ) : (
-                      <><FiSend size={16} /> Send Message</>
+                      <>
+                        <FiSend size={16} />
+                        Send Message
+                      </>
                     )}
                   </button>
-                  <p className="text-slate-600 text-[10px] font-mono text-center tracking-wider mt-4">Your information is safe and will never be shared</p>
+                  <p className="text-slate-600 text-[10px] font-mono text-center tracking-wider mt-4">
+                    🔒 Your info is safe and never shared
+                  </p>
                 </form>
               )}
             </div>

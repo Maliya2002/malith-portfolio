@@ -4,7 +4,7 @@ import { Link } from "react-scroll";
 import { TypeAnimation } from "react-type-animation";
 import { FiArrowRight, FiGithub, FiLinkedin, FiMail, FiArrowDown } from "react-icons/fi";
 import MagneticLink from "./MagneticLink";
-import GlowingSphere from "./GlowingSphere";
+import HeroPhoto from "./HeroPhoto";
 
 const Hero = () => {
   const a = (d) => ({
@@ -14,7 +14,8 @@ const Hero = () => {
   });
 
   return (
-    <section id="home" className="min-h-screen flex items-center relative overflow-hidden">
+    <section id="home" className="min-h-screen flex items-center relative overflow-hidden pt-20 lg:pt-0">
+      {/* Giant Background Text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
         <motion.h1
           initial={{ opacity: 0, scale: 0.9 }}
@@ -27,9 +28,12 @@ const Hero = () => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
-        <div className="grid lg:grid-cols-12 gap-8 items-center">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+
+          {/* LEFT — Text Content */}
           <div className="lg:col-span-7">
-            <motion.div {...a(1.8)} className="flex items-center gap-3 mb-12">
+            {/* Status */}
+            <motion.div {...a(1.8)} className="flex items-center gap-3 mb-10">
               <div className="relative">
                 <div className="w-2 h-2 rounded-full bg-green-400" />
                 <div className="w-2 h-2 rounded-full bg-green-400 absolute inset-0 animate-ping" />
@@ -39,20 +43,34 @@ const Hero = () => {
               </span>
             </motion.div>
 
+            {/* Greeting */}
             <motion.div {...a(2.0)}>
-              <p className="text-blue text-sm font-mono tracking-[0.2em] mb-4 uppercase">Hello, I'm</p>
+              <p className="text-blue text-sm font-mono tracking-[0.2em] mb-4 uppercase">
+                Hello, I'm
+              </p>
             </motion.div>
 
-            <motion.h1 {...a(2.2)} className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.92] tracking-[-0.04em] mb-3">
+            {/* Name */}
+            <motion.h1
+              {...a(2.2)}
+              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.92] tracking-[-0.04em] mb-3"
+            >
               <span className="text-white">Malith</span>
             </motion.h1>
 
-            <motion.h1 {...a(2.4)} className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.92] tracking-[-0.04em] mb-8">
-              <span className="text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.2)" }}>
+            <motion.h1
+              {...a(2.4)}
+              className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.92] tracking-[-0.04em] mb-8"
+            >
+              <span
+                className="text-transparent"
+                style={{ WebkitTextStroke: "2px rgba(255,255,255,0.2)" }}
+              >
                 Madushan
               </span>
             </motion.h1>
 
+            {/* Role with typing */}
             <motion.div {...a(2.6)} className="flex items-center gap-4 mb-8">
               <div className="w-16 h-[1px] bg-blue" />
               <TypeAnimation
@@ -69,17 +87,25 @@ const Hero = () => {
               />
             </motion.div>
 
-            <motion.p {...a(2.8)} className="text-slate-400 text-base md:text-lg max-w-lg leading-relaxed mb-12">
+            {/* Description */}
+            <motion.p
+              {...a(2.8)}
+              className="text-slate-400 text-base md:text-lg max-w-lg leading-relaxed mb-12"
+            >
               3rd Year IT Undergraduate at SLIIT, crafting immersive web experiences
               with clean code, stunning visuals, and cutting-edge technologies.
             </motion.p>
 
+            {/* CTA Buttons */}
             <motion.div {...a(3.0)} className="flex flex-wrap items-center gap-4 mb-16">
               <MagneticLink strength={0.2}>
                 <Link to="work" smooth duration={600} offset={-80}>
                   <button className="group bg-blue hover:bg-white text-white hover:text-black px-8 py-4 rounded-full text-sm font-bold flex items-center gap-3 transition-all duration-500 hover-trigger">
                     View Projects
-                    <FiArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300" size={16} />
+                    <FiArrowRight
+                      className="group-hover:translate-x-1.5 transition-transform duration-300"
+                      size={16}
+                    />
                   </button>
                 </Link>
               </MagneticLink>
@@ -91,13 +117,17 @@ const Hero = () => {
                 </Link>
               </MagneticLink>
               <MagneticLink strength={0.15}>
-                <a href="/Malith_Madushan_Resume.pdf" download
-                  className="text-slate-400 hover:text-blue text-sm font-mono tracking-wider transition-colors hover-trigger ml-2">
+                <a
+                  href="/Malith_Madushan_Resume.pdf"
+                  download
+                  className="text-slate-400 hover:text-blue text-sm font-mono tracking-wider transition-colors hover-trigger ml-2"
+                >
                   ↓ Resume
                 </a>
               </MagneticLink>
             </motion.div>
 
+            {/* Social Links */}
             <motion.div {...a(3.2)} className="flex items-center gap-8">
               <div className="w-12 h-[1px] bg-white/10" />
               {[
@@ -106,8 +136,12 @@ const Hero = () => {
                 { icon: <FiMail size={18} />, link: "mailto:malithmadushan25@gmail.com" },
               ].map((s, i) => (
                 <MagneticLink key={i} strength={0.3}>
-                  <a href={s.link} target="_blank" rel="noreferrer"
-                    className="text-slate-400 hover:text-white transition-colors duration-500 hover-trigger">
+                  <a
+                    href={s.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-slate-400 hover:text-white transition-colors duration-500 hover-trigger"
+                  >
                     {s.icon}
                   </a>
                 </MagneticLink>
@@ -115,17 +149,19 @@ const Hero = () => {
             </motion.div>
           </div>
 
+          {/* RIGHT — Photo with 3D Animation */}
           <motion.div
-            className="lg:col-span-5 hidden lg:block h-[500px]"
+            className="lg:col-span-5 h-[500px] lg:h-[600px] flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 2.5, duration: 1.5 }}
           >
-            <GlowingSphere />
+            <HeroPhoto />
           </motion.div>
         </div>
       </div>
 
+      {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -133,21 +169,28 @@ const Hero = () => {
         className="absolute bottom-10 left-1/2 -translate-x-1/2"
       >
         <Link to="about" smooth duration={600} offset={-80} className="cursor-pointer hover-trigger">
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2.5, repeat: Infinity }}
-            className="flex flex-col items-center gap-3">
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity }}
+            className="flex flex-col items-center gap-3"
+          >
             <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-white/15 to-white/5" />
             <FiArrowDown className="text-slate-500" size={14} />
           </motion.div>
         </Link>
       </motion.div>
 
+      {/* Side Text */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 3.5 }}
         className="absolute right-8 top-1/2 -translate-y-1/2 hidden xl:block"
       >
-        <p className="text-slate-600 text-[10px] font-mono tracking-[0.3em]" style={{ writingMode: "vertical-rl" }}>
+        <p
+          className="text-slate-600 text-[10px] font-mono tracking-[0.3em]"
+          style={{ writingMode: "vertical-rl" }}
+        >
           FULL STACK DEVELOPER — SLIIT — 2026
         </p>
       </motion.div>
