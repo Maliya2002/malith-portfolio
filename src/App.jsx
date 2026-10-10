@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  lockScroll,
+  unlockScroll,
+  forceScrollTop,
+  pinTopUntilStable,
+} from "./utils/scrollControl";
 import Scene3D from "./components/Scene3D";
 import MouseTrail from "./components/MouseTrail";
 import Cursor from "./components/Cursor";
@@ -26,73 +32,32 @@ import Footer from "./components/Footer";
 function App() {
   const [loading, setLoading] = useState(true);
 
-  // FORCE SCROLL TO TOP - RUNS IMMEDIATELY
+  // Every visit starts on the hero, never on a restored / anchored position.
   useEffect(() => {
-    // Disable scroll restoration
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
 
-    // Remove any hash
     if (window.location.hash) {
       window.history.replaceState(null, null, window.location.pathname);
     }
 
-    // Prevent scroll during loading
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = "0";
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.bottom = "0";
+    lockScroll();
+    forceScrollTop();
 
-    return () => {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.body.style.bottom = "";
-    };
+    return unlockScroll;
   }, []);
 
-  const handleLoaderComplete = () => {
-    // Remove all scroll restrictions
-    document.body.style.overflow = "";
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.left = "";
-    document.body.style.right = "";
-    document.body.style.bottom = "";
+  const handleLoaderComplete = useCallback(() => {
+    unlockScroll();
+    forceScrollTop();
 
-    // Force scroll to absolute top
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-
-    // Now show the content
+    // Reveal the page. The sections mount in this tick and then settle while
+    // images decode and the in-view animations fire, so the viewport is held at
+    // the top until the layout stops moving.
     setLoading(false);
-
-    // Force top again after render
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
-      }, 100);
-
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 300);
-
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 600);
-    });
-  };
+    pinTopUntilStable();
+  }, []);
 
   if (loading) {
     return <Loader onComplete={handleLoaderComplete} />;

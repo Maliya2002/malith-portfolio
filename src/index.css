@@ -18,10 +18,19 @@ html, body {
   height: 100%;
   overflow-x: hidden;
   scroll-behavior: auto;
+  /* Never let the browser "anchor" the viewport to a mid-page element while
+     the freshly rendered sections push the layout around on first paint. */
+  overflow-anchor: none;
 }
 
 html {
   scroll-behavior: auto !important;
+}
+
+/* Applied by src/utils/scrollControl.js while the intro loader is on screen */
+html.page-scroll-locked,
+body.page-scroll-locked {
+  overflow: hidden !important;
 }
 
 body {
@@ -315,6 +324,28 @@ html.light-mode body {
 html.light-mode .bg-bg,
 html.light-mode .bg-\[\#050505\] {
   background: #F8FAFC !important;
+}
+
+/* Light Mode - navbar once scrolled */
+html.light-mode .bg-\[\#050505\]\/80 {
+  background: rgba(248, 250, 252, 0.85) !important;
+}
+
+/* Light Mode - floating panels (photo badge, music player) */
+html.light-mode .bg-\[\#0A0A0A\]\/90 {
+  background: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Light Mode - marquee edge fades would otherwise stay near-black */
+html.light-mode .from-\[\#050505\] {
+  --tw-gradient-from: #F8FAFC;
+  --tw-gradient-to: rgba(248, 250, 252, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+/* Light Mode - very faint text (clock, scroll readout) */
+html.light-mode .text-white\/10 {
+  color: rgba(15, 23, 42, 0.4) !important;
 }
 
 html.light-mode .bg-\[\#0A0A0A\] {

@@ -5,6 +5,7 @@ import { FiGithub, FiStar, FiGitBranch, FiUsers, FiCode } from "react-icons/fi";
 
 const GitHubStats = () => {
   const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true });
+  const [chartFailed, setChartFailed] = useState(false);
   const [stats, setStats] = useState({
     repos: 21,
     followers: 1,
@@ -27,11 +28,13 @@ const GitHubStats = () => {
       .catch(() => {});
   }, []);
 
+  // The API returns exact counts, so only the hand-tracked contribution total
+  // is shown as "140+" instead of putting a "+" on every single number.
   const items = [
-    { icon: <FiCode />, label: "Repositories", value: stats.repos, color: "#0066FF" },
-    { icon: <FiUsers />, label: "Followers", value: stats.followers, color: "#8B5CF6" },
-    { icon: <FiGitBranch />, label: "Contributions", value: stats.contributions, color: "#EC4899" },
-    { icon: <FiStar />, label: "Achievements", value: 2, color: "#F59E0B" },
+    { icon: <FiCode />, label: "Repositories", value: stats.repos, suffix: "", color: "#0066FF" },
+    { icon: <FiUsers />, label: "Followers", value: stats.followers, suffix: "", color: "#8B5CF6" },
+    { icon: <FiGitBranch />, label: "Contributions", value: stats.contributions, suffix: "+", color: "#EC4899" },
+    { icon: <FiStar />, label: "Achievements", value: 2, suffix: "", color: "#F59E0B" },
   ];
 
   return (
@@ -71,7 +74,10 @@ const GitHubStats = () => {
               >
                 {item.icon}
               </div>
-              <div className="font-display text-3xl font-bold text-white mb-1">{item.value}+</div>
+              <div className="font-display text-3xl font-bold text-white mb-1">
+                {item.value}
+                {item.suffix}
+              </div>
               <div className="text-slate-500 text-xs font-mono tracking-wider uppercase">{item.label}</div>
             </motion.div>
           ))}
@@ -84,11 +90,27 @@ const GitHubStats = () => {
           transition={{ delay: 0.5 }}
           className="mt-6 filled-card rounded-2xl p-6"
         >
-          <img
-            src="https://ghchart.rshah.org/0066FF/maliya2002"
-            alt="GitHub Contributions"
-            className="w-full rounded-lg"
-          />
+          {/* Reserved height keeps the page from jumping when the chart loads. */}
+          <div className="min-h-[132px] flex items-center justify-center">
+            {chartFailed ? (
+              <a
+                href="https://github.com/maliya2002"
+                target="_blank"
+                rel="noreferrer"
+                className="text-slate-500 hover:text-blue text-xs font-mono tracking-wider transition-colors hover-trigger"
+              >
+                Contribution chart unavailable — view it on GitHub →
+              </a>
+            ) : (
+              <img
+                src="https://ghchart.rshah.org/0066FF/maliya2002"
+                alt="GitHub contribution chart for maliya2002"
+                className="w-full rounded-lg"
+                loading="lazy"
+                onError={() => setChartFailed(true)}
+              />
+            )}
+          </div>
         </motion.div>
       </div>
     </section>

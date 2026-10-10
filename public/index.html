@@ -9,8 +9,18 @@
   <title>Malith Madushan | Full Stack Developer</title>
   <meta name="description" content="Malith Madushan - Full Stack Web Developer" />
 
-  <!-- CRITICAL: Force top on every load -->
+  <!-- Start every visit at the top, never on a restored scroll position -->
   <script>
+    // Apply the saved theme before first paint, otherwise a light-mode visitor
+    // sees a dark flash while React loads and mounts.
+    try {
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.add('light-mode');
+      }
+    } catch (e) {
+      /* storage unavailable (private mode) - fall back to the dark theme */
+    }
+
     // Disable browser scroll restoration IMMEDIATELY
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
@@ -21,10 +31,11 @@
       history.replaceState(null, null, window.location.pathname);
     }
 
-    // Force scroll to top
+    // <body> does not exist yet inside <head> - only touch what is available.
     window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    if (document.documentElement) {
+      document.documentElement.scrollTop = 0;
+    }
   </script>
 </head>
 <body>
@@ -32,7 +43,8 @@
   <div id="root"></div>
 
   <script>
-    // Force top after page load
+    // Safety net: force the top once every asset has finished loading, since a
+    // late image or font can otherwise leave the browser scrolled mid-page.
     window.addEventListener('load', function() {
       window.scrollTo(0, 0);
       document.documentElement.scrollTop = 0;

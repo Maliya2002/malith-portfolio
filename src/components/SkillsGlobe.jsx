@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
@@ -28,8 +28,6 @@ const skills = [
 const SkillsGlobe = () => {
   const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true });
   const canvasRef = useRef(null);
-  const [rotation, setRotation] = useState({ x: 0, y: 0 });
-  const [autoRotate, setAutoRotate] = useState(true);
   const mouseRef = useRef({ x: 0, y: 0, down: false, lastX: 0, lastY: 0 });
 
   useEffect(() => {
@@ -73,8 +71,8 @@ const SkillsGlobe = () => {
       const cx = w / 2;
       const cy = h / 2;
 
-      // Auto rotation
-      if (autoRotate && !mouseRef.current.down) {
+      // Auto rotation, paused while the visitor is dragging
+      if (!mouseRef.current.down) {
         auto.x += 0.003;
         auto.y += 0.002;
         targetRot = { x: auto.x, y: auto.y };
@@ -159,14 +157,18 @@ const SkillsGlobe = () => {
       animId = requestAnimationFrame(animate);
     };
 
-    // Mouse interaction
-    const handleMouseDown = (e) => {
+    // Pointer events cover mouse, pen and touch, so the globe can be dragged on
+    // phones too (it used to be mouse-only, despite the "Drag to rotate" hint).
+    const handlePointerDown = (e) => {
       mouseRef.current.down = true;
       mouseRef.current.lastX = e.clientX;
       mouseRef.current.lastY = e.clientY;
+      if (canvas.setPointerCapture) {
+        canvas.setPointerCapture(e.pointerId);
+      }
     };
 
-    const handleMouseMove = (e) => {
+    const handlePointerMove = (e) => {
       if (!mouseRef.current.down) return;
       const dx = e.clientX - mouseRef.current.lastX;
       const dy = e.clientY - mouseRef.current.lastY;
@@ -176,23 +178,25 @@ const SkillsGlobe = () => {
       mouseRef.current.lastY = e.clientY;
     };
 
-    const handleMouseUp = () => {
+    const handlePointerUp = () => {
       mouseRef.current.down = false;
     };
 
-    canvas.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
+    canvas.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("pointercancel", handlePointerUp);
 
     animate();
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
-      canvas.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
+      canvas.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("pointercancel", handlePointerUp);
     };
-  }, [autoRotate]);
+  }, []);
 
   return (
     <section className="py-32 border-b border-white/[0.05]" ref={ref}>
@@ -202,7 +206,7 @@ const SkillsGlobe = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           className="flex items-center gap-4 mb-16"
         >
-          <span className="text-blue text-xs font-mono tracking-[0.2em]">07</span>
+          <span className="text-blue text-xs font-mono tracking-[0.2em]">03</span>
           <div className="h-[1px] flex-1 max-w-[60px] bg-white/10" />
           <span className="text-slate-500 text-xs font-mono tracking-[0.2em] uppercase">Tech Universe</span>
         </motion.div>
@@ -231,7 +235,7 @@ const SkillsGlobe = () => {
           transition={{ delay: 0.3, duration: 1 }}
           className="relative h-[500px] cursor-grab active:cursor-grabbing"
         >
-          <canvas ref={canvasRef} className="w-full h-full" />
+          <canvas ref={canvasRef} className="w-full h-full touch-none" />
         </motion.div>
       </div>
     </section>

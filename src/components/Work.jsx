@@ -63,7 +63,7 @@ const Work = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           className="flex items-center gap-4 mb-20"
         >
-          <span className="text-blue text-xs font-mono tracking-[0.2em]">03</span>
+          <span className="text-blue text-xs font-mono tracking-[0.2em]">04</span>
           <div className="h-[1px] flex-1 max-w-[60px] bg-white/10" />
           <span className="text-slate-500 text-xs font-mono tracking-[0.2em] uppercase">Work</span>
         </motion.div>

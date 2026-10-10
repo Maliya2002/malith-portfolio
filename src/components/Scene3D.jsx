@@ -17,9 +17,11 @@ const Scene3D = () => {
     };
     resize();
     window.addEventListener("resize", resize);
-    window.addEventListener("mousemove", (e) => {
+
+    const onMouseMove = (e) => {
       mouse = { x: e.clientX, y: e.clientY };
-    });
+    };
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
 
     // ═══════ TECH ICONS ═══════
     const techIcons = [
@@ -76,19 +78,6 @@ const Scene3D = () => {
         i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
       }
       ctx.closePath();
-    };
-
-    // Draw code brackets
-    const drawBrackets = (ctx, x, y, size, opacity, color) => {
-      ctx.save();
-      ctx.strokeStyle = `rgba(${color}, ${opacity})`;
-      ctx.lineWidth = 1.5;
-      ctx.font = `${size}px 'JetBrains Mono', monospace`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillStyle = `rgba(${color}, ${opacity * 0.7})`;
-      ctx.fillText("</>", x, y);
-      ctx.restore();
     };
 
     const animate = () => {
@@ -326,6 +315,7 @@ const Scene3D = () => {
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("mousemove", onMouseMove);
     };
   }, []);
 

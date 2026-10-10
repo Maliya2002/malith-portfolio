@@ -28,24 +28,43 @@ const MusicPlayer = () => {
     }
   }, []);
 
+  // Keep the element and the button in sync: the previous version flipped
+  // `playing` even when the browser blocked playback, and a track change
+  // silently stopped the audio instead of continuing it.
   const togglePlay = () => {
-    if (playing) {
-      audioRef.current.pause();
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio
+        .play()
+        .then(() => setPlaying(true))
+        .catch(() => setPlaying(false));
     } else {
-      audioRef.current.play().catch(() => {});
+      audio.pause();
+      setPlaying(false);
     }
-    setPlaying(!playing);
   };
 
-  const nextTrack = () => {
-    const next = (currentTrack + 1) % tracks.length;
-    setCurrentTrack(next);
-    setTimeout(() => {
-      if (playing && audioRef.current) {
-        audioRef.current.play().catch(() => {});
-      }
-    }, 100);
-  };
+  // Track the playing flag in a ref so the track-change effect below can resume
+  // playback without depending on (and re-running for) the playing state.
+  const playingRef = useRef(false);
+
+  useEffect(() => {
+    playingRef.current = playing;
+  }, [playing]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.load();
+    if (playingRef.current) {
+      audio.play().catch(() => setPlaying(false));
+    }
+  }, [currentTrack]);
+
+  const nextTrack = () => setCurrentTrack((i) => (i + 1) % tracks.length);
 
   const toggleMute = () => {
     audioRef.current.muted = !muted;
@@ -58,7 +77,9 @@ const MusicPlayer = () => {
         ref={audioRef}
         src={tracks[currentTrack].url}
         loop={false}
+        preload="none"
         onEnded={nextTrack}
+        onError={() => setPlaying(false)}
       />
 
       {/* Toggle Button */}

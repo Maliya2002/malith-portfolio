@@ -57,11 +57,19 @@ const Terminal = () => {
     { type: "system", text: "" },
   ]);
   const [input, setInput] = useState("");
-  const bottomRef = useRef(null);
+  const logRef = useRef(null);
+  const inputRef = useRef(null);
 
+  // Scroll only the terminal's own log box. Using scrollIntoView() here walks up
+  // every scrollable ancestor, including the page itself, which dragged the
+  // whole site down to this section the moment the intro loader finished.
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const log = logRef.current;
+    if (!log) return;
+    log.scrollTo({ top: log.scrollHeight, behavior: "smooth" });
   }, [history]);
+
+  const focusInput = () => inputRef.current?.focus({ preventScroll: true });
 
   const handleCommand = (e) => {
     e.preventDefault();
@@ -104,6 +112,7 @@ const Terminal = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           className="flex items-center gap-4 mb-8"
         >
+          <span className="text-blue text-xs font-mono tracking-[0.2em]">08</span>
           <FiTerminal size={20} className="text-blue" />
           <h3 className="font-display text-2xl font-bold text-white">Try My Terminal</h3>
         </motion.div>
@@ -130,7 +139,11 @@ const Terminal = () => {
           </div>
 
           {/* Terminal Body */}
-          <div className="p-6 font-mono text-sm h-96 overflow-y-auto">
+          <div
+            ref={logRef}
+            onClick={focusInput}
+            className="p-6 font-mono text-sm h-96 overflow-y-auto"
+          >
             {history.map((line, i) => (
               <div key={i} className="mb-1">
                 {line.type === "input" && (
@@ -155,17 +168,15 @@ const Terminal = () => {
             <form onSubmit={handleCommand} className="flex items-center gap-2">
               <span className="text-green">malith@portfolio:~$</span>
               <input
+                ref={inputRef}
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 className="flex-1 bg-transparent outline-none text-white"
-                autoFocus
                 placeholder="Type a command..."
               />
               <span className="w-2 h-4 bg-blue animate-pulse" />
             </form>
-
-            <div ref={bottomRef} />
           </div>
         </motion.div>
       </div>

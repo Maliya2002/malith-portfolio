@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 const HeroPhoto = () => {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
+  // The animation loop reads the pointer from a ref, so moving the mouse no
+  // longer restarts the effect (which used to reset the orbit back to frame 0).
+  const mouseRef = useRef({ x: 0.5, y: 0.5 });
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
 
   useEffect(() => {
@@ -31,8 +34,8 @@ const HeroPhoto = () => {
       time += 0.006;
 
       // Smooth mouse follow
-      currentMouse.x += (mousePos.x - currentMouse.x) * 0.08;
-      currentMouse.y += (mousePos.y - currentMouse.y) * 0.08;
+      currentMouse.x += (mouseRef.current.x - currentMouse.x) * 0.08;
+      currentMouse.y += (mouseRef.current.y - currentMouse.y) * 0.08;
 
       const cx = w / 2;
       const cy = h / 2;
@@ -188,15 +191,17 @@ const HeroPhoto = () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
     };
-  }, [mousePos]);
+  }, []);
 
   const handleMouse = (e) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    setMousePos({
+    const next = {
       x: (e.clientX - rect.left) / rect.width,
       y: (e.clientY - rect.top) / rect.height,
-    });
+    };
+    mouseRef.current = next;
+    setMousePos(next);
   };
 
   const photoOffsetX = (mousePos.x - 0.5) * 15;

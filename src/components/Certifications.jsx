@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { FiAward, FiExternalLink } from "react-icons/fi";
+import { FiAward, FiCheckCircle } from "react-icons/fi";
 
 const certs = [
   { name: "Python for Beginners", org: "University of Moratuwa (CODL)", year: "2024", color: "#0066FF" },
@@ -57,7 +57,12 @@ const Certifications = () => {
               <p className="text-slate-400 text-sm mb-3">{cert.org}</p>
               <div className="flex items-center justify-between">
                 <span className="text-slate-500 text-xs font-mono tracking-wider">{cert.year}</span>
-                <FiExternalLink size={14} className="text-slate-600 group-hover:text-blue transition-colors" />
+                {/* These are non-linked credentials, so an external-link icon
+                    was misleading - it looked clickable but went nowhere. */}
+                <span className="flex items-center gap-1.5 text-slate-500 text-[10px] font-mono tracking-wider group-hover:text-blue transition-colors">
+                  <FiCheckCircle size={12} />
+                  Completed
+                </span>
               </div>
             </motion.div>
           ))}

@@ -46,7 +46,7 @@ const Testimonials = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-12"
         >
-          <p className="text-blue text-xs font-mono tracking-[0.2em] uppercase mb-4">Testimonials</p>
+          <p className="text-blue text-xs font-mono tracking-[0.2em] uppercase mb-4">07 — Testimonials</p>
           <h2 className="font-display text-3xl md:text-4xl font-bold text-white">
             What people <span className="text-blue">say</span>
           </h2>

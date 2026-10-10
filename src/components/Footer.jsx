@@ -5,14 +5,22 @@ import MagneticLink from "./MagneticLink";
 const Footer = () => {
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
+  const scrollToContact = () => {
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <footer className="border-t border-white/[0.06] relative z-10">
       <div className="max-w-7xl mx-auto px-8 py-20 text-center">
         <p className="text-slate-500 text-xs font-mono tracking-[0.2em] mb-6 uppercase">Got a project?</p>
         <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-[-0.03em] mb-8">
-          <span className="text-white hover:text-blue transition-colors duration-500 cursor-pointer hover-trigger">
+          <button
+            type="button"
+            onClick={scrollToContact}
+            className="text-white hover:text-blue transition-colors duration-500 cursor-pointer hover-trigger"
+          >
             Let's talk
-          </span>
+          </button>
           <span className="text-blue">.</span>
         </h2>
         <a href="mailto:malithmadushan25@gmail.com"

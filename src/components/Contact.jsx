@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import emailjs from "@emailjs/browser";
-import { FiSend, FiMail, FiLinkedin, FiGithub, FiCheck, FiArrowUpRight, FiAlertCircle } from "react-icons/fi";
+import { FiSend, FiMail, FiLinkedin, FiGithub, FiCheck, FiArrowUpRight, FiAlertCircle, FiLock } from "react-icons/fi";
 
 const Contact = () => {
   const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
@@ -48,7 +48,7 @@ const Contact = () => {
     <section id="contact" className="py-40 section-alt" ref={ref}>
       <div className="max-w-7xl mx-auto px-8">
         <motion.div {...a(0)} className="flex items-center gap-4 mb-20">
-          <span className="text-blue text-xs font-mono tracking-[0.2em]">08</span>
+          <span className="text-blue text-xs font-mono tracking-[0.2em]">09</span>
           <div className="h-[1px] flex-1 max-w-[60px] bg-white/10" />
           <span className="text-slate-500 text-xs font-mono tracking-[0.2em] uppercase">Contact</span>
         </motion.div>
@@ -92,7 +92,9 @@ const Contact = () => {
                 <div className="text-slate-500 text-[10px] font-mono tracking-wider">AVG REPLY</div>
               </div>
               <div className="filled-card rounded-xl p-5 text-center hover-trigger">
-                <div className="font-display text-2xl font-bold text-blue mb-1">✓</div>
+                <div className="flex justify-center text-blue mb-2">
+                  <FiCheck size={20} />
+                </div>
                 <div className="text-slate-500 text-[10px] font-mono tracking-wider">AVAILABLE</div>
               </div>
             </motion.div>
@@ -101,14 +103,17 @@ const Contact = () => {
           <motion.div {...a(0.4)} className="lg:col-span-3">
             <div className="filled-card rounded-2xl p-8 md:p-10 corner-decoration">
               <h3 className="font-display text-xl font-bold text-white mb-2">Send a message</h3>
-              <p className="text-slate-400 text-sm mb-8">Your message goes directly to my inbox 📬</p>
+              <p className="text-slate-400 text-sm mb-8 flex items-center gap-2">
+                <FiMail size={14} className="text-blue shrink-0" />
+                Your message goes directly to my inbox
+              </p>
 
               {status === "sent" && (
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-16">
                   <div className="w-16 h-16 rounded-full border border-green/20 bg-green/5 flex items-center justify-center mx-auto mb-6">
                     <FiCheck size={28} className="text-green" />
                   </div>
-                  <h4 className="font-display text-xl font-bold text-white mb-2">Message Sent! ✅</h4>
+                  <h4 className="font-display text-xl font-bold text-white mb-2">Message sent</h4>
                   <p className="text-slate-400 text-sm">Thanks! I'll reply within 24 hours.</p>
                 </motion.div>
               )}
@@ -118,7 +123,7 @@ const Contact = () => {
                   <div className="w-16 h-16 rounded-full border border-red-500/20 bg-red-500/5 flex items-center justify-center mx-auto mb-6">
                     <FiAlertCircle size={28} className="text-red-400" />
                   </div>
-                  <h4 className="font-display text-xl font-bold text-white mb-2">Failed to send</h4>
+                  <h4 className="font-display text-xl font-bold text-white mb-2">Couldn't send</h4>
                   <p className="text-slate-400 text-sm">Please try again or email me directly.</p>
                 </motion.div>
               )}
@@ -180,8 +185,9 @@ const Contact = () => {
                       </>
                     )}
                   </button>
-                  <p className="text-slate-600 text-[10px] font-mono text-center tracking-wider mt-4">
-                    🔒 Your info is safe and never shared
+                  <p className="text-slate-600 text-[10px] font-mono text-center tracking-wider mt-4 flex items-center justify-center gap-1.5">
+                    <FiLock size={11} />
+                    Your info is safe and never shared
                   </p>
                 </form>
               )}

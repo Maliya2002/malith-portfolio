@@ -21,7 +21,7 @@ const Cursor = () => {
         dotRef.current.style.top = `${e.clientY - 2.5}px`;
       }
     };
-    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mousemove", onMove, { passive: true });
 
     // Ring follows with smooth lerp
     let animId;
@@ -38,26 +38,32 @@ const Cursor = () => {
     };
     animateRing();
 
-    const enter = () => setActive(true);
-    const leave = () => setActive(false);
+    // Delegated hover detection. Attaching listeners to every interactive
+    // element and re-scanning the whole document on each DOM mutation (the
+    // typewriter alone mutates ~25x a second) made scrolling visibly janky.
+    const INTERACTIVE =
+      "a, button, .hover-trigger, input, textarea, select, [role='button']";
 
-    const updateHovers = () => {
-      document.querySelectorAll("a, button, .hover-trigger, input, textarea").forEach((el) => {
-        el.removeEventListener("mouseenter", enter);
-        el.removeEventListener("mouseleave", leave);
-        el.addEventListener("mouseenter", enter);
-        el.addEventListener("mouseleave", leave);
-      });
+    const onOver = (e) => {
+      if (e.target instanceof Element && e.target.closest(INTERACTIVE)) {
+        setActive(true);
+      }
     };
 
-    updateHovers();
-    const obs = new MutationObserver(updateHovers);
-    obs.observe(document.body, { childList: true, subtree: true });
+    const onOut = (e) => {
+      if (e.target instanceof Element && e.target.closest(INTERACTIVE)) {
+        setActive(false);
+      }
+    };
+
+    document.addEventListener("mouseover", onOver, true);
+    document.addEventListener("mouseout", onOut, true);
 
     return () => {
       cancelAnimationFrame(animId);
       document.removeEventListener("mousemove", onMove);
-      obs.disconnect();
+      document.removeEventListener("mouseover", onOver, true);
+      document.removeEventListener("mouseout", onOut, true);
     };
   }, []);
 
