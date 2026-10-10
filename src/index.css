@@ -14,17 +14,18 @@
   box-sizing: border-box;
 }
 
-html, body {
-  height: 100%;
+/* The viewport has to own the scroll. Putting height/overflow-x on <body>
+   turned the body into its own scroll container, which left window.scrollY
+   pinned at 0: nothing could scroll the page programmatically (nav links,
+   back-to-top) and the scroll-driven UI (navbar blur, progress bar) never
+   updated. Only <html> is given an overflow now - that propagates to the
+   viewport and keeps <body> in normal flow. */
+html {
   overflow-x: hidden;
-  scroll-behavior: auto;
+  scroll-behavior: auto !important;
   /* Never let the browser "anchor" the viewport to a mid-page element while
      the freshly rendered sections push the layout around on first paint. */
   overflow-anchor: none;
-}
-
-html {
-  scroll-behavior: auto !important;
 }
 
 /* Applied by src/utils/scrollControl.js while the intro loader is on screen */
@@ -34,6 +35,7 @@ body.page-scroll-locked {
 }
 
 body {
+  overflow-anchor: none;
   background: #050505;
   color: #E2E8F0;
   font-family: 'Manrope', sans-serif;
