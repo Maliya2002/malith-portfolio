@@ -6,33 +6,17 @@ const Loader = ({ onComplete }) => {
   const [exit, setExit] = useState(false);
 
   useEffect(() => {
-    // Force to top when loader mounts
-    window.scrollTo(0, 0);
-
-    const t = setInterval(() => {
-      setCount((p) => {
-        if (p >= 100) {
-          clearInterval(t);
-          setTimeout(() => {
-            window.scrollTo(0, 0);  // Force top before exit
-            setExit(true);
-          }, 150);
-          setTimeout(() => {
-            window.scrollTo(0, 0);  // Force top before complete
-            onComplete();
-          }, 700);
-          return 100;
-        }
-        return p + 4;
-      });
-    }, 10);
-    return () => clearInterval(t);
+    let progress = 0;
+    const timer = setInterval(() => { progress = Math.min(100, progress + 10); setCount(progress); }, 25);
+    const exitTimer = setTimeout(() => setExit(true), 300);
+    const doneTimer = setTimeout(onComplete, 800);
+    return () => { clearInterval(timer); clearTimeout(exitTimer); clearTimeout(doneTimer); };
   }, [onComplete]);
 
   return (
     <motion.div
       className="fixed inset-0 z-[10000] flex items-center justify-center"
-      style={{ background: "#050505" }}
+      style={{ background: "#050404" }}
       animate={exit ? { y: "-100%" } : { y: "0%" }}
       transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
     >

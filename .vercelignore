@@ -1,0 +1,5 @@
+node_modules
+.git
+build
+deployed-files.json
+restore-live.ps1

@@ -31,3 +31,24 @@ test("renders only the intro loader on first paint", () => {
   expect(container.textContent).toContain("LOADING");
   expect(container.textContent).not.toContain("Selected");
 });
+
+
+test("reveals recruiter content, working navigation and labelled contact fields after loading", () => {
+  const originalObserver = window.IntersectionObserver;
+  window.IntersectionObserver = class { observe() {} unobserve() {} disconnect() {} };
+  const originalScrollTo = HTMLElement.prototype.scrollTo;
+  HTMLElement.prototype.scrollTo = jest.fn();
+  try {
+    act(() => root.render(<App />));
+    act(() => jest.advanceTimersByTime(850));
+    expect(container.querySelector('#home h1').textContent).toContain('Ideas to code');
+    expect(container.querySelector('#work')).not.toBeNull();
+    expect(container.querySelector('a[download]').getAttribute('href')).toBe('/Malith_Madushan_CV.pdf');
+    expect(container.querySelector('label[for="contact-email"]')).not.toBeNull();
+    expect(container.querySelector('audio')).toBeNull();
+    expect(container.querySelector('.ambient-background canvas')).toBeNull();
+  } finally {
+    window.IntersectionObserver = originalObserver;
+    HTMLElement.prototype.scrollTo = originalScrollTo;
+  }
+});

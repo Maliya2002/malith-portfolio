@@ -6,25 +6,20 @@ import {
   pinTopUntilStable,
 } from "./utils/scrollControl";
 import Scene3D from "./components/Scene3D";
-import MouseTrail from "./components/MouseTrail";
-import Cursor from "./components/Cursor";
+import { MotionConfig } from "framer-motion";
 import Loader from "./components/Loader";
 import ScrollIndicator from "./components/ScrollIndicator";
 import BackToTop from "./components/BackToTop";
 import CommandPalette from "./components/CommandPalette";
-import ThemeToggle from "./components/ThemeToggle";
-import MusicPlayer from "./components/MusicPlayer";
+
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Marquee from "./components/Marquee";
 import About from "./components/About";
 import Skills from "./components/Skills";
+import SkillsGlobe from "./components/SkillsGlobe";
 import Work from "./components/Work";
 import Experience from "./components/Experience";
-import GitHubStats from "./components/GitHubStats";
-import SkillsGlobe from "./components/SkillsGlobe";
 import Certifications from "./components/Certifications";
-import Testimonials from "./components/Testimonials";
 import Terminal from "./components/Terminal";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -39,7 +34,7 @@ function App() {
     }
 
     if (window.location.hash) {
-      window.history.replaceState(null, null, window.location.pathname);
+      window.history.replaceState(null, null, window.location.pathname + window.location.search);
     }
 
     lockScroll();
@@ -64,32 +59,28 @@ function App() {
   }
 
   return (
-    <div className="relative">
+    <MotionConfig reducedMotion="user"><div className="relative">
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <Scene3D />
-      <MouseTrail />
-      <Cursor />
+
       <ScrollIndicator />
       <BackToTop />
-      <CommandPalette />
-      <ThemeToggle />
-      <MusicPlayer />
+
       <Navbar />
-      <main className="relative z-10">
+      <main id="main-content" tabIndex={-1} className="relative z-10">
         <Hero />
-        <Marquee />
+        <Work />
         <About />
         <Skills />
         <SkillsGlobe />
-        <Work />
         <Experience />
-        <GitHubStats />
         <Certifications />
-        <Testimonials />
-        <Terminal />
         <Contact />
+        <Terminal />
       </main>
+      <div className="flex justify-center py-8 relative z-20"><CommandPalette /></div>
       <Footer />
-    </div>
+    </div></MotionConfig>
   );
 }
 

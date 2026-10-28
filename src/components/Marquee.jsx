@@ -5,8 +5,8 @@ const items = ["REACT", "NODE.JS", "MONGODB", "TYPESCRIPT", "TAILWIND", "EXPRESS
 
 const Marquee = () => (
   <div className="py-24 border-y border-white/[0.05] overflow-hidden relative">
-    <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-[#050505] to-transparent z-10" />
-    <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-[#050505] to-transparent z-10" />
+    <div className="absolute left-0 top-0 bottom-0 w-40 bg-gradient-to-r from-[#050404] to-transparent z-10" />
+    <div className="absolute right-0 top-0 bottom-0 w-40 bg-gradient-to-l from-[#050404] to-transparent z-10" />
     <motion.div
       animate={{ x: [0, -2400] }}
       transition={{ duration: 30, repeat: Infinity, ease: "linear" }}

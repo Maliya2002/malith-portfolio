@@ -23,7 +23,7 @@ const Background = () => {
 
     // Orbs
     const orbs = [
-      { x: 0.2, y: 0.15, r: 450, color: "0,102,255", speed: 0.0004, offset: 0, intensity: 0.06 },
+      { x: 0.2, y: 0.15, r: 450, color: "190,255,62", speed: 0.0004, offset: 0, intensity: 0.06 },
       { x: 0.8, y: 0.85, r: 400, color: "139,92,246", speed: 0.0003, offset: 2, intensity: 0.045 },
       { x: 0.5, y: 0.5, r: 380, color: "236,72,153", speed: 0.00025, offset: 4, intensity: 0.035 },
       { x: 0.9, y: 0.2, r: 320, color: "6,182,212", speed: 0.00035, offset: 1, intensity: 0.025 },
@@ -47,7 +47,7 @@ const Background = () => {
       vy: (Math.random() - 0.5) * 0.25,
       size: Math.random() * 1.5 + 0.3,
       opacity: Math.random() * 0.08 + 0.02,
-      color: ["0,102,255", "139,92,246", "255,255,255"][Math.floor(Math.random() * 3)],
+      color: ["190,255,62", "139,92,246", "255,255,255"][Math.floor(Math.random() * 3)],
     }));
 
     // Shooting stars
@@ -84,8 +84,8 @@ const Background = () => {
 
       // Mouse glow
       const mg = ctx.createRadialGradient(smoothMouse.x, smoothMouse.y, 0, smoothMouse.x, smoothMouse.y, 280);
-      mg.addColorStop(0, "rgba(0,102,255,0.035)");
-      mg.addColorStop(0.5, "rgba(0,102,255,0.012)");
+      mg.addColorStop(0, "rgba(190,255,62,0.035)");
+      mg.addColorStop(0.5, "rgba(190,255,62,0.012)");
       mg.addColorStop(1, "transparent");
       ctx.fillStyle = mg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -147,7 +147,7 @@ const Background = () => {
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(smoothMouse.x, smoothMouse.y);
-          ctx.strokeStyle = `rgba(0,102,255,${(1 - md / 180) * 0.05})`;
+          ctx.strokeStyle = `rgba(190,255,62,${(1 - md / 180) * 0.05})`;
           ctx.lineWidth = 0.3;
           ctx.stroke();
         }
@@ -204,7 +204,7 @@ const Background = () => {
             const op = 0.06 * (1 - gd / 250);
             ctx.beginPath();
             ctx.arc(x, y, 1.2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0,102,255,${op})`;
+            ctx.fillStyle = `rgba(190,255,62,${op})`;
             ctx.fill();
           }
         }

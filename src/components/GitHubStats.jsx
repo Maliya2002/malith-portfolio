@@ -1,40 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { FiGithub, FiStar, FiGitBranch, FiUsers, FiCode } from "react-icons/fi";
+import { FiGithub, FiGitBranch, FiUsers, FiCode } from "react-icons/fi";
 
 const GitHubStats = () => {
   const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true });
   const [chartFailed, setChartFailed] = useState(false);
-  const [stats, setStats] = useState({
-    repos: 21,
-    followers: 1,
-    following: 2,
-    stars: 1,
-    contributions: 140,
-  });
+  const [stats, setStats] = useState({ repos: null, followers: null, following: null });
 
   useEffect(() => {
     fetch("https://api.github.com/users/maliya2002")
-      .then((res) => res.json())
+      .then((res) => { if (!res.ok) throw new Error("GitHub unavailable"); return res.json(); })
       .then((data) => {
         setStats((prev) => ({
           ...prev,
-          repos: data.public_repos || 21,
-          followers: data.followers || 1,
-          following: data.following || 2,
+          repos: data.public_repos ?? null,
+          followers: data.followers ?? null,
+          following: data.following ?? null,
         }));
       })
       .catch(() => {});
   }, []);
 
-  // The API returns exact counts, so only the hand-tracked contribution total
-  // is shown as "140+" instead of putting a "+" on every single number.
   const items = [
-    { icon: <FiCode />, label: "Repositories", value: stats.repos, suffix: "", color: "#0066FF" },
-    { icon: <FiUsers />, label: "Followers", value: stats.followers, suffix: "", color: "#8B5CF6" },
-    { icon: <FiGitBranch />, label: "Contributions", value: stats.contributions, suffix: "+", color: "#EC4899" },
-    { icon: <FiStar />, label: "Achievements", value: 2, suffix: "", color: "#F59E0B" },
+    { icon: <FiCode />, label: "Repositories", value: stats.repos, suffix: "", color: "#a6ff00" },
+    { icon: <FiUsers />, label: "Followers", value: stats.followers, suffix: "", color: "#c0f65c" },
+    { icon: <FiGitBranch />, label: "Following", value: stats.following, suffix: "", color: "#ec4899" },
   ];
 
   return (
@@ -43,7 +34,7 @@ const GitHubStats = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="flex items-center justify-between mb-10"
+          className="flex flex-wrap gap-4 items-center justify-between mb-10"
         >
           <div className="flex items-center gap-4">
             <FiGithub size={20} className="text-blue" />
@@ -59,7 +50,7 @@ const GitHubStats = () => {
           </a>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {items.map((item, i) => (
             <motion.div
               key={i}
@@ -75,7 +66,7 @@ const GitHubStats = () => {
                 {item.icon}
               </div>
               <div className="font-display text-3xl font-bold text-white mb-1">
-                {item.value}
+                {item.value ?? "—"}
                 {item.suffix}
               </div>
               <div className="text-slate-500 text-xs font-mono tracking-wider uppercase">{item.label}</div>

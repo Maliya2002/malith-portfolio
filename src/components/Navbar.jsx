@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
 import MagneticLink from "./MagneticLink";
 import CurrentTime from "./CurrentTime";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -15,20 +16,21 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  const links = ["home", "about", "skills", "work", "contact"];
+  const links = ["home", "work", "about", "skills", "contact"];
 
   return (
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, delay: 1.2 }}
+      transition={{ duration: 0.6, delay: 0 }}
       className={`fixed w-full z-50 transition-all duration-500 ${
-        scrolled ? "bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.06]" : "bg-transparent"
+        scrolled ? "bg-[#050404]/80 backdrop-blur-xl border-b border-white/[0.06]" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
         <MagneticLink strength={0.2}>
           <Link
+            href="#home"
             to="home"
             smooth
             duration={600}
@@ -47,6 +49,7 @@ const Navbar = () => {
           {links.map((l) => (
             <MagneticLink key={l} strength={0.15}>
               <Link
+                href={`#${l}`}
                 to={l}
                 smooth
                 spy
@@ -71,7 +74,8 @@ const Navbar = () => {
           </MagneticLink>
         </div>
 
-        <button onClick={() => setOpen(!open)} className="md:hidden text-white hover-trigger">
+        <ThemeToggle />
+        <button aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(!open)} className="md:hidden text-white hover-trigger">
           {open ? <FiX size={22} /> : <FiMenu size={22} />}
         </button>
       </div>
@@ -80,12 +84,14 @@ const Navbar = () => {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-[#0A0A0A] border-t border-white/[0.06] px-8 py-8"
+          id="mobile-navigation"
+          className="md:hidden bg-[#060908] border-t border-white/[0.06] px-8 py-8"
         >
           {links.map((l) => (
             <Link
               key={l}
-              to={l}
+              href={`#${l}`}
+                to={l}
               smooth
               duration={600}
               offset={-80}

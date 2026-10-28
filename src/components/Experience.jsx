@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const timeline = [
-  { year: "2024 — Present", title: "3rd Year IT Undergraduate", place: "SLIIT — Sri Lanka", desc: "Focusing on full stack web development, software engineering, and building real-world applications.", color: "#0066FF" },
-  { year: "2024", title: "MERN Stack Development", place: "Self-taught + Academic", desc: "Built multiple applications using MongoDB, Express, React, and Node.js including LMS and scheduling systems.", color: "#8B5CF6" },
-  { year: "2023", title: "Web Development Journey", place: "Started Learning", desc: "Began learning HTML, CSS, JavaScript and exploring web technologies. Built first projects and portfolio.", color: "#EC4899" },
+  { year: "2024 — Present", title: "3rd Year IT Undergraduate", place: "SLIIT — Sri Lanka", desc: "Focusing on full stack web development, software engineering, and building real-world applications.", color: "#a6ff00" },
+  { year: "2024", title: "MERN Stack Development", place: "Self-taught + Academic", desc: "Built multiple applications using MongoDB, Express, React, and Node.js including LMS and scheduling systems.", color: "#c0f65c" },
+  { year: "2023", title: "Web Development Journey", place: "Started Learning", desc: "Began learning HTML, CSS, JavaScript and exploring web technologies. Built first projects and portfolio.", color: "#ec4899" },
 ];
 
 const Experience = () => {
@@ -19,7 +19,7 @@ const Experience = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           className="flex items-center gap-4 mb-20"
         >
-          <span className="text-blue text-xs font-mono tracking-[0.2em]">05</span>
+          <span className="text-blue text-xs font-mono tracking-[0.2em]">04</span>
           <div className="h-[1px] flex-1 max-w-[60px] bg-white/10" />
           <span className="text-slate-500 text-xs font-mono tracking-[0.2em] uppercase">Journey</span>
         </motion.div>
@@ -30,7 +30,7 @@ const Experience = () => {
           transition={{ delay: 0.1 }}
           className="font-display text-4xl md:text-5xl font-bold tracking-[-0.03em] mb-24 text-white"
         >
-          My <span className="text-blue">journey</span>
+          Education & <span className="text-blue">learning</span>
         </motion.h2>
 
         <div className="relative">
@@ -45,10 +45,10 @@ const Experience = () => {
               className="relative grid md:grid-cols-2 gap-8 mb-20"
             >
               <div className="absolute left-0 md:left-1/2 top-2 -translate-x-1/2 z-10">
-                <div className="w-3 h-3 rounded-full border-2 bg-[#050505]" style={{ borderColor: item.color }} />
+                <div className="w-3 h-3 rounded-full border-2 bg-[#050404]" style={{ borderColor: item.color }} />
               </div>
 
-              <div className={`${i % 2 === 0 ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"}`}>
+              <div className={`pl-6 md:pl-0 ${i % 2 === 0 ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"}`}>
                 <span className="text-slate-500 text-xs font-mono tracking-[0.15em] mb-3 block">{item.year}</span>
                 <h3 className="font-display text-xl font-bold text-white mb-2">{item.title}</h3>
                 <p className="text-slate-400 text-sm mb-3">{item.place}</p>

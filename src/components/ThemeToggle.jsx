@@ -6,7 +6,8 @@ const ThemeToggle = () => {
   const [dark, setDark] = useState(true);
 
   useEffect(() => {
-    const saved = localStorage.getItem("theme");
+    let saved;
+    try { saved = localStorage.getItem("theme"); } catch { return; }
     if (saved === "light") {
       setDark(false);
       document.documentElement.classList.add("light-mode");
@@ -16,7 +17,7 @@ const ThemeToggle = () => {
   const toggle = () => {
     const newDark = !dark;
     setDark(newDark);
-    localStorage.setItem("theme", newDark ? "dark" : "light");
+    try { localStorage.setItem("theme", newDark ? "dark" : "light"); } catch { /* Theme still works without storage. */ }
 
     if (newDark) {
       document.documentElement.classList.remove("light-mode");
@@ -28,7 +29,7 @@ const ThemeToggle = () => {
   return (
     <motion.button
       onClick={toggle}
-      className="fixed top-24 right-8 z-40 w-12 h-12 rounded-full bg-[#0A0A0A] border border-white/10 flex items-center justify-center text-slate-400 hover:text-blue hover:border-blue/50 transition-all shadow-2xl hover-trigger"
+      className="relative shrink-0 z-40 w-10 h-10 rounded-full bg-[#060908] border border-white/10 flex items-center justify-center text-slate-400 hover:text-blue hover:border-blue/50 transition-all shadow-2xl hover-trigger"
       whileTap={{ scale: 0.9, rotate: 180 }}
       title={dark ? "Switch to light mode" : "Switch to dark mode"}
     >

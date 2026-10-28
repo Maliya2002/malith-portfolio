@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const skills = [
@@ -26,13 +26,14 @@ const skills = [
 ];
 
 const SkillsGlobe = () => {
-  const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true });
+  const [ref, inView] = useInView({ threshold: 0.1 });
+  const reducedMotion = useReducedMotion();
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0, down: false, lastX: 0, lastY: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || reducedMotion || !inView) return;
     const ctx = canvas.getContext("2d");
     let animId;
     let currentRot = { x: 0, y: 0 };
@@ -51,7 +52,7 @@ const SkillsGlobe = () => {
 
     // Generate sphere points
     const points = [];
-    const radius = 150;
+    const radius = Math.min(150, canvas.offsetWidth * 0.32);
     skills.forEach((skill, i) => {
       const phi = Math.acos(-1 + (2 * i) / skills.length);
       const theta = Math.sqrt(skills.length * Math.PI) * phi;
@@ -73,8 +74,8 @@ const SkillsGlobe = () => {
 
       // Auto rotation, paused while the visitor is dragging
       if (!mouseRef.current.down) {
-        auto.x += 0.003;
-        auto.y += 0.002;
+        auto.x += 0.0006;
+        auto.y += 0.0004;
         targetRot = { x: auto.x, y: auto.y };
       }
 
@@ -117,7 +118,7 @@ const SkillsGlobe = () => {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0, 102, 255, ${alpha * 0.2})`;
+            ctx.strokeStyle = `rgba(190, 255, 62, ${alpha * 0.2})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -148,7 +149,7 @@ const SkillsGlobe = () => {
         ctx.font = `bold ${10 * p.scale}px 'JetBrains Mono', monospace`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.9})`;
+        ctx.fillStyle = `rgba(${document.documentElement.classList.contains("light-mode") ? "30, 41, 59" : "255, 255, 255"}, ${alpha * 0.9})`;
         ctx.fillText(p.skill.name, p.x, p.y + 15 * p.scale);
 
         ctx.globalAlpha = 1;
@@ -179,6 +180,7 @@ const SkillsGlobe = () => {
     };
 
     const handlePointerUp = () => {
+      auto = { ...targetRot };
       mouseRef.current.down = false;
     };
 
@@ -196,17 +198,17 @@ const SkillsGlobe = () => {
       window.removeEventListener("pointerup", handlePointerUp);
       window.removeEventListener("pointercancel", handlePointerUp);
     };
-  }, []);
+  }, [reducedMotion, inView]);
 
   return (
-    <section className="py-32 border-b border-white/[0.05]" ref={ref}>
+    <section className="py-16 border-b border-white/[0.05]" ref={ref}>
       <div className="max-w-7xl mx-auto px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           className="flex items-center gap-4 mb-16"
         >
-          <span className="text-blue text-xs font-mono tracking-[0.2em]">03</span>
+          <span className="text-blue text-xs font-mono tracking-[0.2em]">INTERACTIVE</span>
           <div className="h-[1px] flex-1 max-w-[60px] bg-white/10" />
           <span className="text-slate-500 text-xs font-mono tracking-[0.2em] uppercase">Tech Universe</span>
         </motion.div>
@@ -226,16 +228,16 @@ const SkillsGlobe = () => {
           transition={{ delay: 0.2 }}
           className="text-slate-500 text-sm text-center mb-12 font-mono"
         >
-          Drag to rotate · Interactive 3D globe
+          {reducedMotion ? "Technologies I work with" : "Drag to rotate · Interactive 3D globe"}
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ delay: 0.3, duration: 1 }}
-          className="relative h-[500px] cursor-grab active:cursor-grabbing"
+          className="relative h-[360px] md:h-[420px] cursor-grab active:cursor-grabbing"
         >
-          <canvas ref={canvasRef} className="w-full h-full touch-none" />
+          {reducedMotion ? <ul className="flex flex-wrap justify-center gap-4 p-8">{skills.map(skill => <li key={skill.name} className="filled-card px-4 py-3 rounded-xl text-slate-300">{skill.name}</li>)}</ul> : <canvas ref={canvasRef} aria-label="Interactive skills globe; technologies also listed in Skills section" className="w-full h-full touch-pan-y" />}
         </motion.div>
       </div>
     </section>

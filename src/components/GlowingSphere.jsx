@@ -15,14 +15,14 @@ const AnimatedSphere = () => {
   return (
     <Sphere ref={ref} args={[1, 64, 64]} scale={1.8}>
       <MeshDistortMaterial
-        color="#0066FF"
+        color="#a6ff00"
         distort={0.4}
         speed={2}
         roughness={0.2}
         metalness={0.8}
         transparent
         opacity={0.08}
-        emissive="#0066FF"
+        emissive="#a6ff00"
         emissiveIntensity={0.3}
       />
     </Sphere>
@@ -41,13 +41,13 @@ const InnerSphere = () => {
   return (
     <Sphere ref={ref} args={[1, 32, 32]} scale={1.2}>
       <MeshDistortMaterial
-        color="#8B5CF6"
+        color="#c0f65c"
         distort={0.6}
         speed={3}
         wireframe
         transparent
         opacity={0.1}
-        emissive="#8B5CF6"
+        emissive="#c0f65c"
         emissiveIntensity={0.2}
       />
     </Sphere>
@@ -62,12 +62,12 @@ const GlowingSphere = () => {
         <pointLight
           position={[5, 5, 5]}
           intensity={0.5}
-          color="#0066FF"
+          color="#a6ff00"
         />
         <pointLight
           position={[-5, -5, -5]}
           intensity={0.3}
-          color="#8B5CF6"
+          color="#c0f65c"
         />
         <AnimatedSphere />
         <InnerSphere />

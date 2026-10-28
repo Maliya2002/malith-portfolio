@@ -85,7 +85,7 @@ const MusicPlayer = () => {
       {/* Toggle Button */}
       <motion.button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-24 right-8 z-40 w-12 h-12 rounded-full bg-[#0A0A0A] border border-white/10 flex items-center justify-center text-slate-400 hover:text-blue hover:border-blue/50 transition-all shadow-2xl hover-trigger"
+        className="fixed bottom-24 right-8 z-40 w-12 h-12 rounded-full bg-[#060908] border border-white/10 flex items-center justify-center text-slate-400 hover:text-blue hover:border-blue/50 transition-all shadow-2xl hover-trigger"
         whileTap={{ scale: 0.9 }}
       >
         <FiMusic size={16} />
@@ -105,7 +105,7 @@ const MusicPlayer = () => {
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed bottom-40 right-8 z-40 w-72 bg-[#0A0A0A]/95 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl"
+            className="fixed bottom-40 right-8 z-40 w-72 bg-[#060908]/95 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between mb-4">

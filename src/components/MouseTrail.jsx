@@ -49,7 +49,7 @@ const MouseTrail = () => {
           point.x, point.y, 0,
           point.x, point.y, point.size * 8
         );
-        gradient.addColorStop(0, `rgba(0, 102, 255, ${point.life * 0.15})`);
+        gradient.addColorStop(0, `rgba(190, 255, 62, ${point.life * 0.15})`);
         gradient.addColorStop(0.5, `rgba(139, 92, 246, ${point.life * 0.05})`);
         gradient.addColorStop(1, "transparent");
 
@@ -75,7 +75,7 @@ const MouseTrail = () => {
         for (let i = 1; i < trail.length; i++) {
           ctx.lineTo(trail[i].x, trail[i].y);
         }
-        ctx.strokeStyle = `rgba(0, 102, 255, 0.08)`;
+        ctx.strokeStyle = `rgba(190, 255, 62, 0.08)`;
         ctx.lineWidth = 1;
         ctx.stroke();
       }

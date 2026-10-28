@@ -12,22 +12,22 @@ const About = () => {
   });
 
  const stats = [
-  { num: "07+", label: "Projects", color: "#0066FF" },   // ← 6 → 7
-  { num: "140+", label: "Commits", color: "#8B5CF6" },
-  { num: "12+", label: "Tech Stack", color: "#EC4899" }, // ← 10 → 12
-  { num: "02", label: "Live Apps", color: "#10B981" },
+  { num: "07+", label: "Projects", color: "#a6ff00" },   // ← 6 → 7
+  { num: "140+", label: "Commits", color: "#c0f65c" },
+  { num: "12+", label: "Tech Stack", color: "#ec4899" }, // ← 10 → 12
+  { num: "02", label: "Live Apps", color: "#10b981" },
 ];
 
   return (
     <section id="about" className="py-40 border-b border-white/[0.05] relative" ref={ref}>
       <div className="max-w-7xl mx-auto px-8">
         <motion.div {...a(0)} className="flex items-center gap-4 mb-20">
-          <span className="text-blue text-xs font-mono tracking-[0.2em]">01</span>
+          <span className="text-blue text-xs font-mono tracking-[0.2em]">02</span>
           <div className="h-[1px] flex-1 max-w-[60px] bg-white/10" />
           <span className="text-slate-500 text-xs font-mono tracking-[0.2em] uppercase">About</span>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-24">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
           <div>
             <motion.h2 {...a(0.1)} className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-[-0.03em] mb-10 text-white">
               I design &<br />build things<br />for the <span className="text-blue">web</span>
@@ -42,7 +42,7 @@ const About = () => {
               </p>
             </motion.div>
 
-            <motion.div {...a(0.3)} className="grid grid-cols-4 gap-6">
+            <motion.div {...a(0.3)} className="grid grid-cols-2 sm:grid-cols-4 gap-6">
               {stats.map((s, i) => (
                 <div key={i} className="group hover-trigger">
                   <div className="font-display text-3xl font-bold text-white mb-1 group-hover:text-blue transition-colors duration-500">
@@ -68,9 +68,9 @@ const About = () => {
               <div className="absolute top-0 right-0 w-40 h-40 bg-blue/5 rounded-full blur-[80px]" />
               <div className="flex items-center gap-2 mb-8 pb-4 border-b border-white/[0.06]">
                 <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-[#FF5F57]" />
-                  <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
-                  <div className="w-3 h-3 rounded-full bg-[#28C840]" />
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                  <div className="w-3 h-3 rounded-full bg-[#b6ff2e]" />
+                  <div className="w-3 h-3 rounded-full bg-[#28c840]" />
                 </div>
                 <span className="ml-auto text-slate-500 text-[11px]">developer.ts</span>
               </div>

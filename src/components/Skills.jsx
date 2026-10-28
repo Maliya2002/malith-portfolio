@@ -1,109 +1,36 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
+import { FiCode, FiServer, FiDatabase, FiTool, FiArrowUpRight, FiLayers } from "react-icons/fi";
 
-const skillData = [
-  { title: "Frontend", color: "#0066FF", skills: [
-    { name: "React", level: 85 },
-    { name: "Next.js", level: 78 },     // ← NEW
-    { name: "JavaScript", level: 88 },
-    { name: "TypeScript", level: 75 },  // ← UP
-    { name: "Tailwind CSS", level: 82 },
-    { name: "HTML / CSS", level: 92 },
-  ]},
-  { title: "Backend", color: "#8B5CF6", skills: [
-    { name: "Node.js", level: 82 },
-    { name: "Express.js", level: 80 },
-    { name: "PHP", level: 68 },
-    { name: "REST API", level: 78 },
-    { name: "Prisma ORM", level: 70 },  // ← NEW
-  ]},
-  { title: "Database", color: "#EC4899", skills: [
-    { name: "MongoDB", level: 80 },
-    { name: "MySQL", level: 74 },
-    { name: "PostgreSQL", level: 70 },  // ← NEW
-  ]},
-  { title: "Tools", color: "#F59E0B", skills: [
-    { name: "Git / GitHub", level: 88 },
-    { name: "VS Code", level: 92 },
-    { name: "Figma", level: 68 },
-    { name: "Postman", level: 82 },
-    { name: "Vercel", level: 78 },
-  ]},
+const groups = [
+  { title: "Frontend", label: "THE EXPERIENCE", icon: FiCode, color: "#c4fa60", description: "From responsive layouts to interactive applications.", skills: ["React", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS", "HTML / CSS"] },
+  { title: "Backend", label: "THE LOGIC", icon: FiServer, color: "#d3fa8b", description: "APIs and services that connect the application.", skills: ["Node.js", "Express.js", "PHP", "REST API", "Prisma ORM"] },
+  { title: "Databases", label: "THE DATA", icon: FiDatabase, color: "#34d399", description: "Relational and document databases behind my projects.", skills: ["MongoDB", "MySQL", "PostgreSQL"] },
+  { title: "Design & workflow", label: "THE PROCESS", icon: FiTool, color: "#b0fb24", description: "Tools for designing, collaborating, testing APIs and deploying.", skills: ["Git / GitHub", "VS Code", "Figma", "Postman", "Vercel"] },
 ];
 
-const Skills = () => {
-  const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
-
+export default function Skills() {
   return (
-    <section id="skills" className="py-40 border-b border-white/[0.05] section-alt" ref={ref}>
-      <div className="max-w-7xl mx-auto px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="flex items-center gap-4 mb-20"
-        >
-          <span className="text-blue text-xs font-mono tracking-[0.2em]">02</span>
-          <div className="h-[1px] flex-1 max-w-[60px] bg-white/10" />
-          <span className="text-slate-500 text-xs font-mono tracking-[0.2em] uppercase">Skills</span>
-        </motion.div>
-
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.1 }}
-          className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] mb-20 text-white"
-        >
-          Technologies I<br /><span className="text-blue">work with</span>
-        </motion.h2>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {skillData.map((group, gi) => (
-            <motion.div
-              key={gi}
-              initial={{ opacity: 0, y: 40 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 + gi * 0.1 }}
-              className="skill-card group hover-trigger"
-            >
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-2 h-2 rounded-full" style={{ background: group.color }} />
-                <h3 className="font-display text-lg font-bold text-white group-hover:text-blue transition-colors">{group.title}</h3>
-                <div className="flex-1 h-[1px] bg-white/[0.06]" />
-                <span className="text-slate-500 text-[10px] font-mono">{group.skills.length} skills</span>
-              </div>
-
-              <div className="space-y-5">
-                {group.skills.map((skill, si) => (
-                  <div key={si}>
-                    <div className="flex justify-between mb-2.5">
-                      <span className="text-slate-300 text-sm">{skill.name}</span>
-                      <motion.span
-                        initial={{ opacity: 0 }}
-                        animate={inView ? { opacity: 1 } : {}}
-                        transition={{ delay: 0.5 + gi * 0.1 + si * 0.05 }}
-                        className="text-slate-500 text-[11px] font-mono"
-                      >
-                        {skill.level}%
-                      </motion.span>
-                    </div>
-                    <div className="progress-bar">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={inView ? { width: `${skill.level}%` } : {}}
-                        transition={{ duration: 1.5, delay: 0.3 + gi * 0.1 + si * 0.06, ease: [0.23, 1, 0.32, 1] }}
-                        className="progress-fill"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+    <section id="skills" className="toolkit-section section-alt" aria-labelledby="toolkit-title">
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
+        <div className="toolkit-heading">
+          <div><p className="hero-eyebrow">03 / TECHNICAL SKILLS</p><h2 id="toolkit-title" className="font-display text-4xl md:text-5xl font-bold text-white tracking-tight">My development <span className="text-blue">toolkit.</span></h2></div>
+          <p>The tools behind the interfaces, APIs and databases I build. Explore how they come together in my projects.</p>
+        </div>
+        <div className="toolkit-grid">
+          {groups.map(({ title, label, icon: Icon, color, description, skills }, index) => (
+            <article className="toolkit-card" key={title} style={{ "--toolkit-accent": color }}>
+              <div className="toolkit-card-top"><span className="toolkit-icon"><Icon aria-hidden="true" /></span><span>{label}</span><span className="toolkit-number">0{index + 1}</span></div>
+              <h3>{title}</h3><p>{description}</p>
+              <ul className="toolkit-tags" aria-label={`${title} technologies`}>{skills.map(skill => <li key={skill}><span aria-hidden="true" />{skill}</li>)}</ul>
+            </article>
           ))}
+        </div>
+        <div className="toolkit-proof">
+          <div className="toolkit-proof-intro"><FiLayers aria-hidden="true" /><div><span>PUTTING IT TOGETHER</span><h3>One stack. A working product.</h3><p>Inside my Upul Stores POS project</p></div></div>
+          <ol className="toolkit-stack" aria-label="Upul Stores POS stack"><li><small>INTERFACE</small><strong>Next.js</strong></li><li><small>APPLICATION</small><strong>TypeScript</strong></li><li><small>DATA ACCESS</small><strong>Prisma</strong></li><li><small>DATABASE</small><strong>PostgreSQL</strong></li></ol>
+          <a href="https://github.com/Maliya2002/upul-stores-pos" target="_blank" rel="noreferrer">Explore the code <FiArrowUpRight aria-hidden="true" /></a>
         </div>
       </div>
     </section>
   );
-};
-
-export default Skills;
+}

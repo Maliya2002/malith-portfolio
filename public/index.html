@@ -2,13 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico?v=volt-4" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="%PUBLIC_URL%/favicon.svg?v=volt-4" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#050505" />
+  <meta name="theme-color" content="#080c0b" />
 
   <title>Malith Madushan | Full Stack Developer</title>
   <meta name="description" content="Malith Madushan - Full Stack Web Developer" />
 
+  <link rel="canonical" href="https://malithmadushan.site/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://malithmadushan.site/" />
+  <meta property="og:title" content="Malith Madushan | Full Stack Developer" />
+  <meta property="og:description" content="Explore my web development projects, skills and experience. Let's build something together." />
+  <meta property="og:image" content="https://malithmadushan.site/malith.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Malith Madushan | Full Stack Developer" />
+  <meta name="twitter:image" content="https://malithmadushan.site/malith.png" />
   <!-- Start every visit at the top, never on a restored scroll position -->
   <script>
     // Apply the saved theme before first paint, otherwise a light-mode visitor
@@ -28,7 +40,7 @@
 
     // Clear any hash from URL
     if (window.location.hash) {
-      history.replaceState(null, null, window.location.pathname);
+      history.replaceState(null, null, window.location.pathname + window.location.search);
     }
 
     // <body> does not exist yet inside <head> - only touch what is available.
@@ -42,14 +54,6 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
 
-  <script>
-    // Safety net: force the top once every asset has finished loading, since a
-    // late image or font can otherwise leave the browser scrolled mid-page.
-    window.addEventListener('load', function() {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    });
-  </script>
+
 </body>
 </html>

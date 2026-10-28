@@ -1,217 +1,70 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-scroll";
-import { TypeAnimation } from "react-type-animation";
-import { FiArrowRight, FiGithub, FiLinkedin, FiMail, FiArrowDown } from "react-icons/fi";
-import MagneticLink from "./MagneticLink";
-import HeroPhoto from "./HeroPhoto";
+import AnimatedRole from "./AnimatedRole";
+import { FiArrowUpRight, FiDownload, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 
-const Hero = () => {
+export default function Hero() {
+  const tilt = (event) => {
+    if (event.pointerType !== "mouse" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const card = event.currentTarget;
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty("--spot-x", ((event.clientX - rect.left) / rect.width * 100) + "%");
+    card.style.setProperty("--spot-y", ((event.clientY - rect.top) / rect.height * 100) + "%");
+    card.style.setProperty("--tilt-x", ((event.clientY - rect.top) / rect.height - 0.5) * -7 + "deg");
+    card.style.setProperty("--tilt-y", ((event.clientX - rect.left) / rect.width - 0.5) * 7 + "deg");
+  };
+  const resetTilt = (event) => { event.currentTarget.style.setProperty("--tilt-x", "0deg"); event.currentTarget.style.setProperty("--tilt-y", "0deg"); };
   return (
-    <section
-      id="home"
-      className="min-h-screen w-full flex items-center relative overflow-hidden"
-      style={{ paddingTop: "120px", paddingBottom: "60px" }}
-    >
-      {/* Giant Background Text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
-        <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.02 }}
-          transition={{ duration: 3, delay: 1 }}
-          className="font-display font-bold text-white whitespace-nowrap"
-          style={{ fontSize: "18vw" }}
-        >
-          DEVELOPER
-        </motion.h1>
-      </div>
-
-      {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-8 w-full">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-
-          {/* LEFT SIDE */}
-          <div className="lg:col-span-7 order-2 lg:order-1">
-
-            {/* Status */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex items-center gap-3 mb-6"
-            >
-              <div className="relative">
-                <div className="w-2 h-2 rounded-full bg-green-400" />
-                <div className="w-2 h-2 rounded-full bg-green-400 absolute inset-0 animate-ping" />
-              </div>
-              <span className="text-slate-400 text-[11px] font-mono tracking-[0.2em] uppercase">
-                Available for Internship
-              </span>
-            </motion.div>
-
-            {/* Greeting */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-blue text-sm font-mono tracking-[0.2em] mb-4 uppercase"
-            >
-              Hello, I'm
-            </motion.p>
-
-            {/* Name Line 1 */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="font-display font-bold leading-none tracking-tight mb-2 text-white"
-              style={{ fontSize: "clamp(2.5rem, 7vw, 5rem)" }}
-            >
-              Malith
-            </motion.h1>
-
-            {/* Name Line 2 */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="font-display font-bold leading-none tracking-tight mb-8"
-              style={{
-                fontSize: "clamp(2.5rem, 7vw, 5rem)",
-                color: "transparent",
-                WebkitTextStroke: "2px rgba(255,255,255,0.3)",
-              }}
-            >
-              Madushan
-            </motion.h1>
-
-            {/* Role with Type Animation */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-              className="flex items-center gap-4 mb-6"
-            >
-              <div className="w-16 h-[1px] bg-blue" />
-              <TypeAnimation
-                sequence={[
-                  "Full Stack Developer", 3000,
-                  "MERN Stack Developer", 3000,
-                  "UI/UX Enthusiast", 3000,
-                  "Creative Problem Solver", 3000,
-                ]}
-                wrapper="span"
-                speed={40}
-                repeat={Infinity}
-                className="text-slate-300 text-base md:text-lg"
-              />
-            </motion.div>
-
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.2 }}
-              className="text-slate-400 text-base md:text-lg max-w-lg leading-relaxed mb-10"
-            >
-              3rd Year IT Undergraduate at SLIIT, crafting immersive web experiences
-              with clean code, stunning visuals, and cutting-edge technologies.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.4 }}
-              className="flex flex-wrap items-center gap-4 mb-10"
-            >
-              <Link to="work" smooth duration={600} offset={-80}>
-                <button className="group bg-blue hover:bg-white text-white hover:text-black px-8 py-4 rounded-full text-sm font-bold flex items-center gap-3 transition-all duration-500 hover-trigger">
-                  View Projects
-                  <FiArrowRight className="group-hover:translate-x-1.5 transition-transform duration-300" size={16} />
-                </button>
-              </Link>
-              <Link to="contact" smooth duration={600} offset={-80}>
-                <button className="text-slate-300 hover:text-white px-8 py-4 rounded-full text-sm font-semibold border border-white/[0.1] hover:border-white/25 transition-all duration-500 hover-trigger">
-                  Let's Talk
-                </button>
-              </Link>
-              <a
-                href="/Malith_Madushan_CV.pdf"
-                download
-                className="text-slate-400 hover:text-blue text-sm font-mono tracking-wider transition-colors hover-trigger"
-              >
-                ↓ Resume
-              </a>
-            </motion.div>
-
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.6 }}
-              className="flex items-center gap-6"
-            >
-              <div className="w-12 h-[1px] bg-white/15" />
-              <a
-                href="https://github.com/maliya2002"
-                target="_blank"
-                rel="noreferrer"
-                className="text-slate-400 hover:text-white transition-colors duration-500 hover-trigger"
-              >
-                <FiGithub size={18} />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/malith-madushan-a3a6b0263"
-                target="_blank"
-                rel="noreferrer"
-                className="text-slate-400 hover:text-white transition-colors duration-500 hover-trigger"
-              >
-                <FiLinkedin size={18} />
-              </a>
-              <a
-                href="mailto:malithmadushan25@gmail.com"
-                className="text-slate-400 hover:text-white transition-colors duration-500 hover-trigger"
-              >
-                <FiMail size={18} />
-              </a>
-            </motion.div>
+    <section id="home" className="recruiter-hero">
+      <div className="hero-aura" aria-hidden="true" /><div className="hero-crosshair" aria-hidden="true">+</div>
+      <span className="hero-watermark" aria-hidden="true">MALITH</span>
+      <div className="max-w-7xl mx-auto px-6 md:px-8 grid lg:grid-cols-12 gap-12 items-center">
+        <div className="lg:col-span-7">
+          <div className="availability"><span /> Seeking a Software Engineer / Full-stack Internship</div>
+          <p className="hero-eyebrow">MALITH MADUSHAN · SRI LANKA</p>
+          <h1 className="hero-heading">Ideas to code.<br /><span className="hero-heading-accent">Built for people.</span></h1>
+          <AnimatedRole />
+          <p className="hero-intro">I'm Malith, a third-year IT undergraduate at SLIIT. I turn complex problems into intuitive full-stack applications—from retail tools to university platforms.</p>
+          <div className="hero-actions">
+            <a href="#work" className="primary-action">Explore my projects <FiArrowUpRight /></a>
+            <a href="/Malith_Madushan_CV.pdf" download className="secondary-action"><FiDownload /> Download CV</a>
           </div>
-
-          {/* RIGHT SIDE — Photo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, delay: 1 }}
-            className="lg:col-span-5 h-[400px] md:h-[500px] lg:h-[600px] flex items-center justify-center order-1 lg:order-2"
-          >
-            <HeroPhoto />
-          </motion.div>
-
+          <div className="hero-proof"><span><b>⚛</b> React / Next.js</span><span><b>JS</b> Node / Express</span><span><b>▤</b> SQL / MongoDB</span></div>
+          <div className="hero-socials">
+            <a href="mailto:malithmadushan25@gmail.com"><FiMail /> Let's talk</a>
+            <a href="https://github.com/maliya2002" target="_blank" rel="noreferrer"><FiGithub /> GitHub</a>
+            <a href="https://www.linkedin.com/in/malith-madushan-a3a6b0263" target="_blank" rel="noreferrer"><FiLinkedin /> LinkedIn</a>
+          </div>
+        </div>
+        <div className="lg:col-span-5 portrait-stage">
+        <div className="portrait-orbit orbit-one" aria-hidden="true" /><div className="portrait-orbit orbit-two" aria-hidden="true" />
+        <span className="portrait-coordinate" aria-hidden="true">BASED IN SRI LANKA</span>
+        <div className="hero-profile" onPointerMove={tilt} onPointerLeave={resetTilt}>
+          <div className="profile-tech-badge badge-react" aria-hidden="true">⚛ <span>React</span></div>
+          <div className="profile-tech-badge badge-node" aria-hidden="true">&lt;/&gt; <span>Full-stack</span></div>
+          <div className="profile-image"><img src="/malith.png" alt="Malith Madushan" width="640" height="720" fetchpriority="high" /></div>
+          <div className="profile-caption"><div><strong>Malith Madushan</strong><span>Full-stack developer · IT undergraduate</span></div><span className="profile-mark" aria-hidden="true">&lt;/&gt;</span></div>
+        </div>
+        <div className="portrait-code" aria-hidden="true"><div><i /><i /><i /><span>developer.ts</span></div><code><span>const</span> developer = &#123;<br />&nbsp; name: <b>"Malith"</b>,<br />&nbsp; focus: <b>"Full-stack"</b>,<br />&nbsp; next: <b>"Your team"</b><br />&#125;;</code></div>
+        <div className="portrait-label" aria-hidden="true"><span>BUILD. LEARN. REPEAT.</span><b>↗</b></div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-      >
-        <Link to="about" smooth duration={600} offset={-80} className="cursor-pointer hover-trigger">
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity }}
-            className="flex flex-col items-center gap-3"
-          >
-            <div className="w-[1px] h-10 bg-gradient-to-b from-transparent via-white/20 to-white/5" />
-            <FiArrowDown className="text-slate-500" size={14} />
-          </motion.div>
-        </Link>
-      </motion.div>
-
+      <div className="hero-showcase max-w-7xl mx-auto px-6 md:px-8">
+        <div className="showcase-heading"><span>A FEW THINGS I'VE BUILT</span><a href="#work">Explore the work <FiArrowUpRight /></a></div>
+        <div className="showcase-grid">
+          <a className="showcase-card" href="https://github.com/Maliya2002/upul-stores-pos" target="_blank" rel="noreferrer">
+            <div className="showcase-art art-pos" aria-hidden="true"><i /><div><b /><b /><b /></div><span>POS</span></div>
+            <div><small>01 / RETAIL SOFTWARE</small><strong>Upul Stores POS</strong><span>Next.js · PostgreSQL</span></div><FiArrowUpRight />
+          </a>
+          <a className="showcase-card" href="https://github.com/kezu1003/UNISLOT---University-Academic-Scheduling-Resource-Management-System" target="_blank" rel="noreferrer">
+            <div className="showcase-art art-schedule" aria-hidden="true"><i /><i /><i /><i /><i /><i /><span>UNI</span></div>
+            <div><small>02 / UNIVERSITY PLATFORM</small><strong>UNISLOT</strong><span>React · Node.js</span></div><FiArrowUpRight />
+          </a>
+          <a className="showcase-card" href="https://sliit-lms.vercel.app/" target="_blank" rel="noreferrer">
+            <div className="showcase-art art-learning" aria-hidden="true"><i>▶</i><span>LMS</span></div>
+            <div><small>03 / LEARNING PLATFORM</small><strong>SLIIT LMS</strong><span><em /> Explore live demo</span></div><FiArrowUpRight />
+          </a>
+        </div>
+      </div>
     </section>
   );
-};
-
-export default Hero;
+}

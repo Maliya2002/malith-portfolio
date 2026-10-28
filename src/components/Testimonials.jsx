@@ -8,19 +8,19 @@ const testimonials = [
     text: "Malith is an incredibly talented developer with a strong grasp of modern web technologies. His attention to detail and commitment to quality is impressive.",
     author: "Team Lead",
     role: "Smart Campus Project",
-    color: "#0066FF",
+    color: "#a6ff00",
   },
   {
     text: "Working with Malith on the SLIIT LMS was a great experience. He delivered clean, efficient code and was always willing to help team members.",
     author: "Project Collaborator",
     role: "SLIIT LMS",
-    color: "#8B5CF6",
+    color: "#c0f65c",
   },
   {
     text: "Malith's dedication to learning and building real-world projects makes him stand out. His portfolio showcases both technical skill and creativity.",
     author: "Fellow Developer",
     role: "Peer Review",
-    color: "#EC4899",
+    color: "#ec4899",
   },
 ];
 

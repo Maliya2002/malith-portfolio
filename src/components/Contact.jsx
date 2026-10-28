@@ -1,34 +1,41 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import emailjs from "@emailjs/browser";
+import { sendContactMessage, contactErrorMessage, contactMailto } from "../utils/contactDelivery";
 import { FiSend, FiMail, FiLinkedin, FiGithub, FiCheck, FiArrowUpRight, FiAlertCircle, FiLock } from "react-icons/fi";
 
 const Contact = () => {
   const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true });
-  const formRef = useRef();
+  const sendingRef = useRef(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [deliveryDetails, setDeliveryDetails] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (sendingRef.current) return;
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setErrorMessage("Please enter your name, email and message."); setStatus("error"); return;
+    }
+    sendingRef.current = true;
+    setErrorMessage("");
+    setDeliveryDetails("");
     setStatus("sending");
 
     try {
-      await emailjs.sendForm(
-        "service_b9cuwb4",           // Service ID
-        "template_r6ikwxt",          // Template ID
-        formRef.current,
-        "HvWSoaNi9OrKZSEW_"          // Public Key
-      );
+      await sendContactMessage(form);
 
       setStatus("sent");
       setForm({ name: "", email: "", message: "" });
-      setTimeout(() => setStatus("idle"), 5000);
+
     } catch (error) {
-      console.error("EmailJS Error:", error);
+      console.error("Contact delivery failed:", { status: error?.status, text: error?.text || error?.message });
+      setErrorMessage(contactErrorMessage(error));
+      setDeliveryDetails([error?.status, error?.text || error?.message].filter(Boolean).join(" — ").slice(0, 300));
       setStatus("error");
-      setTimeout(() => setStatus("idle"), 4000);
+    } finally {
+      sendingRef.current = false;
     }
   };
 
@@ -39,16 +46,16 @@ const Contact = () => {
   });
 
   const socials = [
-    { icon: <FiMail size={20} />, label: "Email", value: "malithmadushan25@gmail.com", href: "mailto:malithmadushan25@gmail.com", color: "#0066FF" },
-    { icon: <FiLinkedin size={20} />, label: "LinkedIn", value: "Malith Madushan", href: "https://www.linkedin.com/in/malith-madushan-a3a6b0263", color: "#8B5CF6" },
-    { icon: <FiGithub size={20} />, label: "GitHub", value: "maliya2002", href: "https://github.com/maliya2002", color: "#EC4899" },
+    { icon: <FiMail size={20} />, label: "Email", value: "malithmadushan25@gmail.com", href: "mailto:malithmadushan25@gmail.com", color: "#a6ff00" },
+    { icon: <FiLinkedin size={20} />, label: "LinkedIn", value: "Malith Madushan", href: "https://www.linkedin.com/in/malith-madushan-a3a6b0263", color: "#c0f65c" },
+    { icon: <FiGithub size={20} />, label: "GitHub", value: "maliya2002", href: "https://github.com/maliya2002", color: "#ec4899" },
   ];
 
   return (
     <section id="contact" className="py-40 section-alt" ref={ref}>
       <div className="max-w-7xl mx-auto px-8">
         <motion.div {...a(0)} className="flex items-center gap-4 mb-20">
-          <span className="text-blue text-xs font-mono tracking-[0.2em]">09</span>
+          <span className="text-blue text-xs font-mono tracking-[0.2em]">06</span>
           <div className="h-[1px] flex-1 max-w-[60px] bg-white/10" />
           <span className="text-slate-500 text-xs font-mono tracking-[0.2em] uppercase">Contact</span>
         </motion.div>
@@ -109,62 +116,70 @@ const Contact = () => {
               </p>
 
               {status === "sent" && (
-                <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-16">
+                <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} role="status" className="text-center py-6">
                   <div className="w-16 h-16 rounded-full border border-green/20 bg-green/5 flex items-center justify-center mx-auto mb-6">
                     <FiCheck size={28} className="text-green" />
                   </div>
                   <h4 className="font-display text-xl font-bold text-white mb-2">Message sent</h4>
-                  <p className="text-slate-400 text-sm">Thanks! I'll reply within 24 hours.</p>
+                  <p className="text-slate-400 text-sm">Thanks! Your message was accepted by the email service.</p>
+                  <button type="button" onClick={() => setStatus("idle")} className="mt-5 text-blue underline">Send another message</button>
                 </motion.div>
               )}
 
               {status === "error" && (
-                <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-16">
+                <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} role="alert" className="text-center py-6">
                   <div className="w-16 h-16 rounded-full border border-red-500/20 bg-red-500/5 flex items-center justify-center mx-auto mb-6">
                     <FiAlertCircle size={28} className="text-red-400" />
                   </div>
                   <h4 className="font-display text-xl font-bold text-white mb-2">Couldn't send</h4>
-                  <p className="text-slate-400 text-sm">Please try again or email me directly.</p>
+                  <p className="text-slate-400 text-sm">{errorMessage}</p>
+                  {deliveryDetails && <details className="mt-3 text-xs text-slate-400 break-words"><summary className="cursor-pointer">Delivery details</summary><p className="mt-2">{deliveryDetails}</p></details>}
                 </motion.div>
               )}
 
-              {(status === "idle" || status === "sending") && (
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
+              {(status !== "sent") && (
+                <form onSubmit={handleSubmit} aria-busy={status === "sending"} className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="text-slate-500 text-[10px] font-mono tracking-[0.2em] mb-3 block uppercase">Name</label>
+                      <label htmlFor="contact-name" className="text-slate-500 text-[10px] font-mono tracking-[0.2em] mb-3 block uppercase">Name</label>
                       <input
                         type="text"
+                        id="contact-name"
                         name="name"
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                         placeholder="Your name"
-                        required
+                        readOnly={status === "sending"}
+                      required
                         className="form-field hover-trigger"
                       />
                     </div>
                     <div>
-                      <label className="text-slate-500 text-[10px] font-mono tracking-[0.2em] mb-3 block uppercase">Email</label>
+                      <label htmlFor="contact-email" className="text-slate-500 text-[10px] font-mono tracking-[0.2em] mb-3 block uppercase">Email</label>
                       <input
                         type="email"
+                        id="contact-email"
                         name="email"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                         placeholder="your@email.com"
+                        readOnly={status === "sending"}
                         required
                         className="form-field hover-trigger"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="text-slate-500 text-[10px] font-mono tracking-[0.2em] mb-3 block uppercase">Message</label>
+                    <label htmlFor="contact-message" className="text-slate-500 text-[10px] font-mono tracking-[0.2em] mb-3 block uppercase">Message</label>
                     <textarea
-                      name="message"
+                      id="contact-message"
+                        name="message"
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
                       placeholder="Tell me about your opportunity..."
                       required
                       className="form-field hover-trigger"
+                      readOnly={status === "sending"}
                       rows={5}
                     />
                   </div>
@@ -185,9 +200,10 @@ const Contact = () => {
                       </>
                     )}
                   </button>
+                  <a href={contactMailto(form)} className="flex items-center justify-center gap-2 text-sm text-blue underline py-3"><FiMail /> Open in my email app</a>
                   <p className="text-slate-600 text-[10px] font-mono text-center tracking-wider mt-4 flex items-center justify-center gap-1.5">
                     <FiLock size={11} />
-                    Your info is safe and never shared
+                    Sent securely via EmailJS
                   </p>
                 </form>
               )}

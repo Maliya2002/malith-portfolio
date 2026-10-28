@@ -49,7 +49,7 @@ const HeroPhoto = () => {
         cx + mx * 0.4, cy + my * 0.4, 0,
         cx + mx * 0.4, cy + my * 0.4, r * 2.5
       );
-      bgGlow.addColorStop(0, `rgba(0, 102, 255, ${0.1 + Math.sin(time) * 0.03})`);
+      bgGlow.addColorStop(0, `rgba(190, 255, 62, ${0.1 + Math.sin(time) * 0.03})`);
       bgGlow.addColorStop(0.4, `rgba(139, 92, 246, 0.04)`);
       bgGlow.addColorStop(1, "transparent");
       ctx.fillStyle = bgGlow;
@@ -67,7 +67,7 @@ const HeroPhoto = () => {
         ctx.setLineDash([3, 8]);
         ctx.beginPath();
         ctx.ellipse(0, 0, ringR, ringR * 0.9, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(0, 102, 255, ${opacity})`;
+        ctx.strokeStyle = `rgba(190, 255, 62, ${opacity})`;
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.setLineDash([]);
@@ -81,7 +81,7 @@ const HeroPhoto = () => {
         cx - r * 1.35, cy,
         cx + r * 1.35, cy
       );
-      solidRing.addColorStop(0, "rgba(0, 102, 255, 0.5)");
+      solidRing.addColorStop(0, "rgba(190, 255, 62, 0.5)");
       solidRing.addColorStop(0.5, "rgba(139, 92, 246, 0.3)");
       solidRing.addColorStop(1, "rgba(236, 72, 153, 0.5)");
       ctx.strokeStyle = solidRing;
@@ -125,7 +125,7 @@ const HeroPhoto = () => {
 
       // ═══════ ORBITING PARTICLES ═══════
       const particles = [
-        { color: "0, 102, 255", r: r * 1.15, speed: 0.5, size: 5 },
+        { color: "190, 255, 62", r: r * 1.15, speed: 0.5, size: 5 },
         { color: "139, 92, 246", r: r * 1.25, speed: -0.4, size: 4 },
         { color: "236, 72, 153", r: r * 1.35, speed: 0.6, size: 4.5 },
         { color: "16, 185, 129", r: r * 1.4, speed: -0.7, size: 3.5 },
@@ -178,7 +178,7 @@ const HeroPhoto = () => {
       const scanY = cy + Math.sin(time * 0.4) * r * 0.9;
       const scanGrad = ctx.createLinearGradient(0, scanY - 25, 0, scanY + 25);
       scanGrad.addColorStop(0, "transparent");
-      scanGrad.addColorStop(0.5, "rgba(0, 102, 255, 0.2)");
+      scanGrad.addColorStop(0.5, "rgba(190, 255, 62, 0.2)");
       scanGrad.addColorStop(1, "transparent");
       ctx.fillStyle = scanGrad;
       ctx.fillRect(cx - r * 1.2, scanY - 25, r * 2.4, 50);
@@ -233,7 +233,7 @@ const HeroPhoto = () => {
         <div
           className="absolute inset-0 rounded-full blur-3xl"
           style={{
-            background: "radial-gradient(circle, rgba(0,102,255,0.4), transparent 70%)",
+            background: "radial-gradient(circle, rgba(190,255,62,0.4), transparent 70%)",
             transform: "scale(1.6)",
             animation: "pulse 3s ease-in-out infinite",
           }}
@@ -245,13 +245,13 @@ const HeroPhoto = () => {
           <div
             className="absolute inset-0 rounded-full p-[3px]"
             style={{
-              background: "linear-gradient(135deg, #0066FF, #8B5CF6, #EC4899, #10B981, #0066FF)",
+              background: "linear-gradient(135deg, #a6ff00, #c0f65c, #ec4899, #10b981, #a6ff00)",
               backgroundSize: "300% 300%",
               animation: "gradientFlow 6s linear infinite",
             }}
           >
             {/* Inner circle with photo */}
-            <div className="w-full h-full rounded-full overflow-hidden bg-[#050505] relative">
+            <div className="w-full h-full rounded-full overflow-hidden bg-[#050404] relative">
               <img
                 src="/malith.png"
                 alt="Malith Madushan"
@@ -265,7 +265,7 @@ const HeroPhoto = () => {
               <div
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background: "linear-gradient(135deg, rgba(0,102,255,0.08) 0%, transparent 50%, rgba(139,92,246,0.08) 100%)",
+                  background: "linear-gradient(135deg, rgba(190,255,62,0.08) 0%, transparent 50%, rgba(139,92,246,0.08) 100%)",
                 }}
               />
             </div>
@@ -285,7 +285,7 @@ const HeroPhoto = () => {
           transition={{ delay: 3.2, duration: 0.6 }}
           className="absolute -bottom-6 left-1/2 -translate-x-1/2 z-20"
         >
-          <div className="bg-[#0A0A0A]/90 backdrop-blur-xl border border-white/10 rounded-full px-5 py-2.5 flex items-center gap-2.5 shadow-2xl">
+          <div className="bg-[#060908]/90 backdrop-blur-xl border border-white/10 rounded-full px-5 py-2.5 flex items-center gap-2.5 shadow-2xl">
             <div className="relative">
               <div className="w-2 h-2 rounded-full bg-green-400" />
               <div className="w-2 h-2 rounded-full bg-green-400 absolute inset-0 animate-ping" />

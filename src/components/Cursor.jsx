@@ -9,7 +9,7 @@ const Cursor = () => {
   const ring = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
-    if (window.innerWidth < 768) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches) return;
     setVisible(true);
 
     const onMove = (e) => {

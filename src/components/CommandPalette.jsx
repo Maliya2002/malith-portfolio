@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { downloadResume } from "../utils/resume";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiHome, FiUser, FiCode, FiBriefcase, FiMail, FiGithub, FiLinkedin, FiDownload, FiExternalLink } from "react-icons/fi";
 
@@ -8,7 +9,7 @@ const commands = [
   { icon: <FiCode />, label: "View Skills", action: "scroll", target: "skills", shortcut: "S" },
   { icon: <FiBriefcase />, label: "See My Work", action: "scroll", target: "work", shortcut: "W" },
   { icon: <FiMail />, label: "Contact Me", action: "scroll", target: "contact", shortcut: "C" },
-  { icon: <FiDownload />, label: "Download Resume", action: "link", target: "/Malith_Madushan_CV.pdf", shortcut: "R" },
+  { icon: <FiDownload />, label: "Download Resume", action: "download", target: "/Malith_Madushan_CV.pdf", shortcut: "R" },
   { icon: <FiGithub />, label: "Visit GitHub", action: "link", target: "https://github.com/maliya2002", shortcut: "G" },
   { icon: <FiLinkedin />, label: "Visit LinkedIn", action: "link", target: "https://linkedin.com/in/malith-madushan-a3a6b0263", shortcut: "L" },
   { icon: <FiExternalLink />, label: "Live: SLIIT LMS", action: "link", target: "https://sliit-lms.vercel.app" },
@@ -16,6 +17,7 @@ const commands = [
 ];
 
 const CommandPalette = () => {
+  const dialogRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(0);
@@ -32,15 +34,33 @@ const CommandPalette = () => {
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    setSelected(0);
+    const previous = document.activeElement;
+    const trap = (event) => {
+      if (event.key !== "Tab") return;
+      const elements = dialogRef.current?.querySelectorAll('input, button, [href]');
+      if (!elements?.length) return;
+      const first = elements[0], last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    };
+    document.addEventListener("keydown", trap);
+    return () => { document.removeEventListener("keydown", trap); previous?.focus({ preventScroll: true }); };
+  }, [open]);
+
   const filtered = commands.filter((c) =>
     c.label.toLowerCase().includes(search.toLowerCase())
   );
 
   const execute = (cmd) => {
     if (cmd.action === "scroll") {
-      document.getElementById(cmd.target)?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById(cmd.target)?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    } else if (cmd.action === "download") {
+      downloadResume();
     } else if (cmd.action === "link") {
-      window.open(cmd.target, "_blank");
+      window.open(cmd.target, "_blank", "noopener,noreferrer");
     }
     setOpen(false);
     setSearch("");
@@ -49,7 +69,8 @@ const CommandPalette = () => {
   useEffect(() => {
     const handleArrows = (e) => {
       if (!open) return;
-      if (e.key === "ArrowDown") setSelected((s) => Math.min(s + 1, filtered.length - 1));
+      if (["ArrowDown", "ArrowUp", "Enter"].includes(e.key)) e.preventDefault();
+      if (e.key === "ArrowDown") setSelected((s) => Math.max(0, Math.min(s + 1, filtered.length - 1)));
       if (e.key === "ArrowUp") setSelected((s) => Math.max(s - 1, 0));
       if (e.key === "Enter" && filtered[selected]) execute(filtered[selected]);
     };
@@ -62,7 +83,7 @@ const CommandPalette = () => {
       {/* Trigger Button */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-8 right-8 z-40 bg-[#0A0A0A] border border-white/10 hover:border-blue/50 rounded-full px-4 py-3 flex items-center gap-3 shadow-2xl hover-trigger group transition-all"
+        className="relative z-40 bg-[#060908] border border-white/10 hover:border-blue/50 rounded-full px-4 py-3 flex items-center gap-3 shadow-2xl hover-trigger group transition-all"
       >
         <FiSearch size={14} className="text-slate-400 group-hover:text-blue transition-colors" />
         <span className="text-slate-400 text-xs font-mono">Search</span>
@@ -78,7 +99,7 @@ const CommandPalette = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9998] bg-black/70 backdrop-blur-sm flex items-start justify-center pt-32"
+            className="fixed inset-0 z-[9998] bg-black/70 backdrop-blur-sm flex items-start justify-center px-4 pt-20 sm:pt-32"
             onClick={() => setOpen(false)}
           >
             <motion.div
@@ -86,12 +107,17 @@ const CommandPalette = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: -20 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-xl bg-[#0A0A0A] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
+              ref={dialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Search portfolio"
+              className="w-full max-w-xl bg-[#060908] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
             >
               {/* Search Input */}
               <div className="flex items-center gap-3 p-5 border-b border-white/[0.06]">
                 <FiSearch size={18} className="text-slate-500" />
                 <input
+                  aria-label="Search commands"
                   autoFocus
                   type="text"
                   placeholder="Type to search commands..."
@@ -103,7 +129,7 @@ const CommandPalette = () => {
               </div>
 
               {/* Commands List */}
-              <div className="max-h-96 overflow-y-auto p-2">
+              <div className="max-h-[55vh] overflow-y-auto p-2">
                 {filtered.length === 0 ? (
                   <div className="p-8 text-center text-slate-500 text-sm">No results found</div>
                 ) : (

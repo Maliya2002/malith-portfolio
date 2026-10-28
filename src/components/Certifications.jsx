@@ -4,11 +4,11 @@ import { useInView } from "react-intersection-observer";
 import { FiAward, FiCheckCircle } from "react-icons/fi";
 
 const certs = [
-  { name: "Python for Beginners", org: "University of Moratuwa (CODL)", year: "2024", color: "#0066FF" },
-  { name: "Career Skills in Software Dev", org: "LinkedIn Learning", year: "2024", color: "#8B5CF6" },
-  { name: "Learning Git and GitHub", org: "LinkedIn Learning", year: "2024", color: "#EC4899" },
-  { name: "English Course", org: "British Way English Academy", year: "2023", color: "#10B981" },
-  { name: "Computer Course", org: "Digital Link Computer Training", year: "2022", color: "#F59E0B" },
+  { name: "Python for Beginners", org: "University of Moratuwa (CODL)", year: "2024", color: "#a6ff00" },
+  { name: "Career Skills in Software Dev", org: "LinkedIn Learning", year: "2024", color: "#c0f65c" },
+  { name: "Learning Git and GitHub", org: "LinkedIn Learning", year: "2024", color: "#ec4899" },
+  { name: "English Course", org: "British Way English Academy", year: "2023", color: "#10b981" },
+  { name: "Computer Course", org: "Digital Link Computer Training", year: "2022", color: "#a3f50b" },
 ];
 
 const Certifications = () => {
@@ -22,7 +22,7 @@ const Certifications = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           className="flex items-center gap-4 mb-20"
         >
-          <span className="text-blue text-xs font-mono tracking-[0.2em]">06</span>
+          <span className="text-blue text-xs font-mono tracking-[0.2em]">05</span>
           <div className="h-[1px] flex-1 max-w-[60px] bg-white/10" />
           <span className="text-slate-500 text-xs font-mono tracking-[0.2em] uppercase">Certifications</span>
         </motion.div>
