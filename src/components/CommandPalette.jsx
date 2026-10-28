@@ -8,7 +8,7 @@ const commands = [
   { icon: <FiCode />, label: "View Skills", action: "scroll", target: "skills", shortcut: "S" },
   { icon: <FiBriefcase />, label: "See My Work", action: "scroll", target: "work", shortcut: "W" },
   { icon: <FiMail />, label: "Contact Me", action: "scroll", target: "contact", shortcut: "C" },
-  { icon: <FiDownload />, label: "Download Resume", action: "link", target: "/Malith_Madushan_Resume.pdf", shortcut: "R" },
+  { icon: <FiDownload />, label: "Download Resume", action: "link", target: "/Malith_Madushan_CV.pdf", shortcut: "R" },
   { icon: <FiGithub />, label: "Visit GitHub", action: "link", target: "https://github.com/maliya2002", shortcut: "G" },
   { icon: <FiLinkedin />, label: "Visit LinkedIn", action: "link", target: "https://linkedin.com/in/malith-madushan-a3a6b0263", shortcut: "L" },
   { icon: <FiExternalLink />, label: "Live: SLIIT LMS", action: "link", target: "https://sliit-lms.vercel.app" },

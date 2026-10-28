@@ -137,7 +137,7 @@ const Hero = () => {
                 </button>
               </Link>
               <a
-                href="/Malith_Madushan_Resume.pdf"
+                href="/Malith_Madushan_CV.pdf"
                 download
                 className="text-slate-400 hover:text-blue text-sm font-mono tracking-wider transition-colors hover-trigger"
               >

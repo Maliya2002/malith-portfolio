@@ -62,7 +62,7 @@ const Navbar = () => {
           ))}
           <MagneticLink strength={0.2}>
             <a
-              href="/Malith_Madushan_Resume.pdf"
+              href="/Malith_Madushan_CV.pdf"
               download
               className="bg-blue text-white text-[12px] font-bold px-6 py-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-500 hover-trigger"
             >
@@ -97,7 +97,7 @@ const Navbar = () => {
             </Link>
           ))}
           <a
-            href="/Malith_Madushan_Resume.pdf"
+            href="/Malith_Madushan_CV.pdf"
             download
             className="block mt-4 bg-blue text-white text-sm font-bold px-6 py-3 rounded-full text-center hover-trigger"
           >

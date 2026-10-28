@@ -37,7 +37,7 @@ LinkedIn: linkedin.com/in/malith-madushan-a3a6b0263
 Website:  malithmadushan.vercel.app`,
 
   resume: `Downloading resume...
-File: Malith_Madushan_Resume.pdf`,
+File: Malith_Madushan_CV.pdf`,
 
   social: `→ GitHub:   github.com/maliya2002
 → LinkedIn: linkedin.com/in/malith-madushan-a3a6b0263
@@ -87,8 +87,8 @@ const Terminal = () => {
       newHistory.push({ type: "output", text: commands.resume });
       setHistory(newHistory);
       const link = document.createElement("a");
-      link.href = "/Malith_Madushan_Resume.pdf";
-      link.download = "Malith_Madushan_Resume.pdf";
+      link.href = "/Malith_Madushan_CV.pdf";
+      link.download = "Malith_Madushan_CV.pdf";
       link.click();
     } else if (commands[cmd]) {
       newHistory.push({ type: "output", text: commands[cmd] });
