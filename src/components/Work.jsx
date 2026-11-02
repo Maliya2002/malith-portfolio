@@ -13,6 +13,15 @@ const projects = [
   },
   {
     num: "02",
+    title: "Cricavo",
+    desc: "A Sinhala/English cricket scoring app with ball-by-ball scoring, scorecards, match history and offline browser storage. Includes undo and JSON backup/restore for locally saved matches.",
+    tech: ["JavaScript", "IndexedDB", "PWA", "Supabase"],
+    github: "https://github.com/Maliya2002/cricavo",
+    live: null,
+    color: "#beff3e",
+  },
+  {
+    num: "03",
     title: "UNISLOT",
     desc: "University academic scheduling and resource management system.",
     tech: ["React", "Node.js", "MongoDB"],
@@ -21,7 +30,7 @@ const projects = [
     color: "#a6ff00",
   },
   {
-    num: "03",
+    num: "04",
     title: "SLIIT LMS",
     desc: "Full-featured learning management system for university students and staff.",
     tech: ["React", "Node.js", "MongoDB"],
@@ -30,7 +39,7 @@ const projects = [
     color: "#c0f65c",
   },
   {
-    num: "04",
+    num: "05",
     title: "Buddhist Center",
     desc: "Official website for Boraluketiya Buddhist Center with cultural content.",
     tech: ["HTML", "CSS", "JavaScript"],
@@ -39,7 +48,7 @@ const projects = [
     color: "#ec4899",
   },
   {
-    num: "05",
+    num: "06",
     title: "Smart Campus",
     desc: "Digital campus management solution for university operations.",
     tech: ["React", "JavaScript", "Node.js"],
