@@ -17,7 +17,7 @@ const projects = [
     desc: "A Sinhala/English cricket scoring app with ball-by-ball scoring, scorecards, match history and offline browser storage. Includes undo and JSON backup/restore for locally saved matches.",
     tech: ["JavaScript", "IndexedDB", "PWA", "Supabase"],
     github: "https://github.com/Maliya2002/cricavo",
-    live: null,
+    live: "https://cricavo.vercel.app",
     color: "#beff3e",
   },
   {
