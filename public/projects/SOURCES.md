@@ -1,4 +1,4 @@
-# Project screenshot sources
+# Project image sources
 
 Captured from rendered public pages on 2026-11-03 at 1440 × 900 in a fresh Chrome browser context, without signing in:
 
@@ -7,6 +7,8 @@ Captured from rendered public pages on 2026-11-03 at 1440 × 900 in a fresh Chro
 - `buddhist-center`: https://boraluketiya-buddhist-center.vercel.app/ — public homepage.
 - `goldenstar`: https://golden-star-sports-club.vercel.app — public homepage.
 
-`upul-pos` uses the existing `.local/dashboard-preview.png` capture from the owner's Upul Stores POS development checkout. It shows the actual mobile dashboard (dated 2026-10-26 in the UI), with no customer or transaction details. It is labeled as a local app preview, not a live deployment. Neutral padding preserves the original screenshot's proportions.
+`upul-pos`, `unislot`, and `smart-campus` are custom conceptual artwork generated with the built-in image generation tool on 2026-11-03. They are labeled "Custom project artwork" and are not actual application screenshots. The Upul artwork replaces the previous mobile dashboard capture.
 
-Images are resized to 720px and 1440px WebP variants at quality 85. No generated UI or substituted project imagery is used.
+Images are resized to 720px and 1440px WebP variants at quality 85, retaining a 16:10 canvas.
+
+Artwork briefs: dark backgrounds with electric lime accents; Upul Stores POS depicts a retail checkout terminal, scanner and groceries; UNISLOT depicts an academic calendar and university resource scheduling; Smart Campus depicts connected university buildings and campus services. Titles and subtitles identify each project; the imagery is illustrative, not a claim of implemented UI.

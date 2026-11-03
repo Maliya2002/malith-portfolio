@@ -6,7 +6,8 @@ const projects = [
     num: "01",
     title: "Upul Stores POS",
     preview: "upul-pos",
-    previewAlt: "Actual Upul Stores POS mobile dashboard with New sale, Add product and View reports actions",
+    previewAlt: "Custom Upul Stores POS artwork with a checkout terminal, barcode scanner and retail products",
+    previewCaption: "Custom project artwork",
     desc: "Enterprise-grade Smart Point of Sale system with AI insights, inventory management, multi-role authentication, and PWA support for retail businesses.",
     tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "NextAuth"],
     github: "https://github.com/Maliya2002/upul-stores-pos",
@@ -27,6 +28,9 @@ const projects = [
   {
     num: "03",
     title: "UNISLOT",
+    preview: "unislot",
+    previewAlt: "Custom UNISLOT artwork illustrating academic timetables and university resource scheduling",
+    previewCaption: "Custom project artwork",
     desc: "University academic scheduling and resource management system.",
     tech: ["React", "Node.js", "MongoDB"],
     github: "https://github.com/kezu1003/UNISLOT---University-Academic-Scheduling-Resource-Management-System",
@@ -58,6 +62,9 @@ const projects = [
   {
     num: "06",
     title: "Smart Campus",
+    preview: "smart-campus",
+    previewAlt: "Custom Smart Campus artwork illustrating connected university buildings and campus services",
+    previewCaption: "Custom project artwork",
     desc: "Digital campus management solution for university operations.",
     tech: ["React", "JavaScript", "Node.js"],
     github: "https://github.com/Maliya2002/it3030-paf-2026-smart-campus-group89",
@@ -85,9 +92,9 @@ const Work = () => (
         {projects.map((p, i) => (
           <article key={p.num} className={i === 0 ? "project-card project-featured" : "project-card"}>
             <div className="project-top"><span>{i === 0 ? "FEATURED PROJECT" : "PROJECT " + p.num}</span><span className="project-status">{p.live ? "Live demo available" : "Source code available"}</span></div>
-            {p.preview && <a className="project-preview" href={p.live || "/projects/" + p.preview + "-1440.webp"} target="_blank" rel="noreferrer" aria-label={p.live ? "Explore " + p.title + " live website" : "View " + p.title + " screenshot"}>
+            {p.preview && <a className="project-preview" href={p.live || "/projects/" + p.preview + "-1440.webp"} target="_blank" rel="noreferrer" aria-label={p.live ? "Explore " + p.title + " live website" : "View " + p.title + " project artwork"}>
               <img src={"/projects/" + p.preview + "-720.webp"} srcSet={"/projects/" + p.preview + "-720.webp 720w, /projects/" + p.preview + "-1440.webp 1440w"} sizes="(max-width: 767px) calc(100vw - 98px), (max-width: 1280px) calc(50vw - 102px), 538px" width="1440" height="900" loading="lazy" decoding="async" alt={p.previewAlt} />
-              <span className="project-preview-caption">{p.live ? "Live website preview" : "Local app preview · Mobile dashboard"} <FiArrowUpRight aria-hidden="true" /></span>
+              <span className="project-preview-caption">{p.previewCaption || "Live website preview"} <FiArrowUpRight aria-hidden="true" /></span>
             </a>}
             <h3>{p.title}</h3><p className="project-description">{p.desc}</p>
             <ul className="project-tags" aria-label="Technologies">{p.tech.map(t => <li key={t}>{t}</li>)}</ul>
