@@ -1,14 +1,12 @@
 # Project image sources
 
-Captured from rendered public pages on 2026-11-03 at 1440 × 900 in a fresh Chrome browser context, without signing in:
+Actual public pages captured on 2026-11-03 at 1440 × 900 without signing in:
 
-- `cricavo`: https://cricavo.vercel.app — public device workspace overview.
-- `sliit-lms`: https://sliit-lms.vercel.app/ — public landing page.
-- `buddhist-center`: https://boraluketiya-buddhist-center.vercel.app/ — public homepage.
-- `goldenstar`: https://golden-star-sports-club.vercel.app — public homepage.
+- cricavo-dark: https://cricavo.vercel.app — dark device workspace.
+- sliit-lms-dark: https://sliit-lms.vercel.app/ — native dark landing page.
+- buddhist-center-dark: https://boraluketiya-buddhist-center.vercel.app/ — dark mode enabled; slideshow paused.
+- goldenstar-dark: https://golden-star-sports-club.vercel.app — native dark homepage.
 
-`upul-pos`, `unislot`, and `smart-campus` are custom conceptual artwork generated with the built-in image generation tool on 2026-11-03. They are labeled "Custom project artwork" and are not actual application screenshots. The Upul artwork replaces the previous mobile dashboard capture.
+Screenshots retain the actual rendered UI, resized to 720px and 1440px WebP at quality 90 on a 16:10 canvas. No simulated dark recoloring.
 
-Images are resized to 720px and 1440px WebP variants at quality 85, retaining a 16:10 canvas.
-
-Artwork briefs: dark backgrounds with electric lime accents; Upul Stores POS depicts a retail checkout terminal, scanner and groceries; UNISLOT depicts an academic calendar and university resource scheduling; Smart Campus depicts connected university buildings and campus services. Titles and subtitles identify each project; the imagery is illustrative, not a claim of implemented UI.
+upul-pos and unislot are custom conceptual artwork generated on 2026-11-03, labeled Custom project artwork, rather than application screenshots. They use dark backgrounds and lime accents, depicting retail checkout and university scheduling respectively. Artwork WebP quality: 85.

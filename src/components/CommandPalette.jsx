@@ -1,3 +1,4 @@
+import { projects } from "../data/projects";
 import { downloadResume } from "../utils/resume";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,12 +13,13 @@ const commands = [
   { icon: <FiDownload />, label: "Download Resume", action: "download", target: "/Malith_Madushan_CV.pdf", shortcut: "R" },
   { icon: <FiGithub />, label: "Visit GitHub", action: "link", target: "https://github.com/maliya2002", shortcut: "G" },
   { icon: <FiLinkedin />, label: "Visit LinkedIn", action: "link", target: "https://linkedin.com/in/malith-madushan-a3a6b0263", shortcut: "L" },
-  { icon: <FiExternalLink />, label: "Live: SLIIT LMS", action: "link", target: "https://sliit-lms.vercel.app" },
-  { icon: <FiExternalLink />, label: "Live: Buddhist Center", action: "link", target: "https://boraluketiya-buddhist-center.vercel.app" },
+  ...projects.filter(project => project.live).map(project => ({ icon: <FiExternalLink />, label: `Live: ${project.title}`, action: "link", target: project.live })),
 ];
 
 const CommandPalette = () => {
   const dialogRef = useRef(null);
+  const previousFocus = useRef(null);
+  const openSearch = () => { previousFocus.current = document.activeElement; setOpen(true); };
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(0);
@@ -26,7 +28,7 @@ const CommandPalette = () => {
     const handleKey = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        setOpen(true);
+        openSearch();
       }
       if (e.key === "Escape") setOpen(false);
     };
@@ -37,7 +39,9 @@ const CommandPalette = () => {
   useEffect(() => {
     if (!open) return;
     setSelected(0);
-    const previous = document.activeElement;
+    const previous = previousFocus.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const trap = (event) => {
       if (event.key !== "Tab") return;
       const elements = dialogRef.current?.querySelectorAll('input, button, [href]');
@@ -47,7 +51,7 @@ const CommandPalette = () => {
       if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     };
     document.addEventListener("keydown", trap);
-    return () => { document.removeEventListener("keydown", trap); previous?.focus({ preventScroll: true }); };
+    return () => { document.body.style.overflow = previousOverflow; document.removeEventListener("keydown", trap); previous?.focus({ preventScroll: true }); };
   }, [open]);
 
   const filtered = commands.filter((c) =>
@@ -69,6 +73,7 @@ const CommandPalette = () => {
   useEffect(() => {
     const handleArrows = (e) => {
       if (!open) return;
+      if (e.target.tagName !== "INPUT") return;
       if (["ArrowDown", "ArrowUp", "Enter"].includes(e.key)) e.preventDefault();
       if (e.key === "ArrowDown") setSelected((s) => Math.max(0, Math.min(s + 1, filtered.length - 1)));
       if (e.key === "ArrowUp") setSelected((s) => Math.max(s - 1, 0));
@@ -82,13 +87,13 @@ const CommandPalette = () => {
     <>
       {/* Trigger Button */}
       <button
-        onClick={() => setOpen(true)}
+        onClick={openSearch}
         className="relative z-40 bg-[#060908] border border-white/10 hover:border-blue/50 rounded-full px-4 py-3 flex items-center gap-3 shadow-2xl hover-trigger group transition-all"
       >
         <FiSearch size={14} className="text-slate-400 group-hover:text-blue transition-colors" />
         <span className="text-slate-400 text-xs font-mono">Search</span>
         <div className="flex items-center gap-1 ml-2">
-          <kbd className="bg-white/[0.05] border border-white/[0.08] text-slate-500 text-[10px] px-1.5 py-0.5 rounded font-mono">⌘</kbd>
+          <kbd className="bg-white/[0.05] border border-white/[0.08] text-slate-500 text-[10px] px-1.5 py-0.5 rounded font-mono">Ctrl / ⌘</kbd>
           <kbd className="bg-white/[0.05] border border-white/[0.08] text-slate-500 text-[10px] px-1.5 py-0.5 rounded font-mono">K</kbd>
         </div>
       </button>
@@ -113,6 +118,7 @@ const CommandPalette = () => {
               aria-label="Search portfolio"
               className="w-full max-w-xl bg-[#060908] border border-white/10 rounded-2xl shadow-2xl overflow-hidden"
             >
+              <button type="button" onClick={() => setOpen(false)} className="block ml-auto px-5 py-3 text-slate-300" aria-label="Close search">Close ×</button>
               {/* Search Input */}
               <div className="flex items-center gap-3 p-5 border-b border-white/[0.06]">
                 <FiSearch size={18} className="text-slate-500" />
@@ -123,7 +129,7 @@ const CommandPalette = () => {
                   placeholder="Type to search commands..."
                   value={search}
                   onChange={(e) => { setSearch(e.target.value); setSelected(0); }}
-                  className="flex-1 bg-transparent outline-none text-white text-sm placeholder:text-slate-600"
+                  className="min-w-0 flex-1 bg-transparent outline-none text-white text-sm placeholder:text-slate-600"
                 />
                 <kbd className="bg-white/[0.05] border border-white/[0.08] text-slate-500 text-[10px] px-2 py-1 rounded font-mono">ESC</kbd>
               </div>

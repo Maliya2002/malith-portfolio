@@ -381,11 +381,11 @@ html.light-mode .text-slate-400 {
 }
 
 html.light-mode .text-slate-500 {
-  color: #7d8b64 !important;
+  color: #536344 !important;
 }
 
 html.light-mode .text-slate-600 {
-  color: #abb894 !important;
+  color: #536344 !important;
 }
 
 /* Light Mode - Borders */
@@ -438,7 +438,7 @@ html.light-mode .form-field:focus {
 }
 
 html.light-mode .form-field::placeholder {
-  color: rgba(100, 116, 139, 0.5) !important;
+  color: #65705f !important;
 }
 
 /* Light Mode - Section Alt */
@@ -497,7 +497,7 @@ html.light-mode canvas {
 
 /* Light Mode - Code block colors */
 html.light-mode pre code .text-slate-500 {
-  color: #7d8b64 !important;
+  color: #536344 !important;
 }
 
 html.light-mode pre code .text-slate-300 {
@@ -510,7 +510,7 @@ html.light-mode pre code .text-slate-300 {
 .ambient-background > div + div { top: auto; left: auto; right: -20vw; bottom: -25vw; background: radial-gradient(circle, rgba(60,240,180,.045), transparent 68%); animation-delay: -15s; }
 @keyframes ambient-drift { to { transform: translate(20px, 15px); } }
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid #c4fa60; outline-offset: 4px; }
-.skip-link { position: fixed; top: -100px; left: 16px; z-index: 10001; background: #a6ff00; color: white; padding: 12px 20px; border-radius: 8px; }
+.skip-link { position: fixed; top: -100px; left: 16px; z-index: 10001; background: #a6ff00; color: #101708; padding: 12px 20px; border-radius: 8px; }
 .skip-link:focus { top: 12px; }
 section[id], #main-content { scroll-margin-top: 90px; }
 @media (max-width: 767px) { .ambient-background > div { animation: none; } }
@@ -799,3 +799,50 @@ html.light-mode .toolkit-tags li,html.light-mode .hero-proof > span { background
 html.light-mode .toolkit-proof { background:#e4eed8; }
 ::selection { background:#beff3e44; }
 :focus-visible { outline-color:#beff3e; }
+
+/* Audit fixes: readable controls, consistent previews and responsive footer credit. */
+.form-field { font-size:16px; border-color:#83968b; }
+.form-field::placeholder { color:#9caea4; }
+textarea.form-field { resize:vertical; }
+.form-field:focus-visible { outline:2px solid #beff3e; outline-offset:3px; }
+footer a, footer button { min-height:44px; display:inline-flex; align-items:center; justify-content:center; }
+footer button, footer a[aria-label] { min-width:44px; }
+footer > div > a { overflow-wrap:anywhere; }
+.mmcode-credit { gap:8px; padding:8px 14px; border-radius:999px; background:#111c16; border:1px solid #354638; color:#e0e9e5; font-size:12px; font-weight:600; white-space:nowrap; }
+.mmcode-credit-label { color:#aabbb0; font-weight:400; }
+.mmcode-credit svg { color:#beff3e; }
+.mmcode-credit:hover { border-color:#beff3e; }
+html.light-mode .mmcode-credit { background:#e7efdf; border-color:#bdcdb4; color:#17251b; }
+html.light-mode .mmcode-credit-label { color:#4b5c43; }
+html.light-mode .mmcode-credit svg, html.light-mode .project-links a,
+html.light-mode .toolkit-stack strong, html.light-mode .toolkit-proof > a,
+html.light-mode .toolkit-proof-intro span { color:#416b0c; }
+html.light-mode :focus-visible { outline-color:#416b0c; }
+html.light-mode .form-field { border-color:#65775d; }
+html.light-mode .form-field::placeholder { color:#65705f; }
+.project-preview { flex-shrink:0; }
+.project-links a { min-height:44px; }
+#about pre { white-space:pre-wrap; overflow-wrap:anywhere; }
+@media(min-width:1024px) {
+  .project-featured { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); column-gap:32px; align-items:start; }
+  .project-featured .project-top { grid-column:1/-1; }
+  .project-featured .project-preview { grid-column:1; grid-row:2 / span 4; width:100%; max-width:none; margin-bottom:0; }
+  .project-featured h3,.project-featured .project-description,.project-featured .project-tags,.project-featured .project-links { grid-column:2; }
+}
+@media(max-width:767px) {
+  #contact .corner-decoration { padding:24px 18px; }
+  #contact label { font-size:12px; }
+  .project-top { font-size:11px; letter-spacing:.04em; }
+  .project-preview-caption { font-size:12px; padding:10px; }
+  .project-card h3,.project-featured h3 { font-size:26px; }
+}
+
+.text-slate-600 { color:#889b90; }
+html.light-mode .hero-proof b,html.light-mode .project-top { color:#416b0c; }
+html.light-mode .text-green,html.light-mode .text-purple { color:#116740; }
+/* Keep long contact addresses within narrow grid columns. */
+#contact .grid > div { min-width:0; }
+#contact a.filled-card > div { min-width:0; }
+#contact a.filled-card > div:first-child { flex-shrink:0; }
+#contact a.filled-card { overflow-wrap:anywhere; }
+@media(max-width:767px) { #contact a.filled-card { padding:20px 16px; gap:14px; } }

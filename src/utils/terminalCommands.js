@@ -1,4 +1,6 @@
 const links = {
+  cricavo: 'https://cricavo.vercel.app/',
+  goldenstar: 'https://golden-star-sports-club.vercel.app/',
   github: 'https://github.com/maliya2002',
   linkedin: 'https://www.linkedin.com/in/malith-madushan-a3a6b0263',
   website: 'https://malithmadushan.site',

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-scroll";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
 import MagneticLink from "./MagneticLink";
 import CurrentTime from "./CurrentTime";
@@ -9,6 +9,28 @@ import ThemeToggle from "./ThemeToggle";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const menuButton = useRef(null);
+  const menuPanel = useRef(null);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!open) return;
+    const close = (event) => {
+      if (event.key === "Escape") { setOpen(false); menuButton.current?.focus(); }
+    };
+    const resize = () => { if (window.innerWidth >= 768) setOpen(false); };
+    const outside = (event) => {
+      if (!menuPanel.current?.contains(event.target) && !menuButton.current?.contains(event.target)) setOpen(false);
+    };
+    window.addEventListener("keydown", close);
+    window.addEventListener("resize", resize);
+    document.addEventListener("pointerdown", outside);
+    return () => {
+      window.removeEventListener("keydown", close);
+      window.removeEventListener("resize", resize);
+      document.removeEventListener("pointerdown", outside);
+    };
+  }, [open]);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 80);
@@ -32,7 +54,7 @@ const Navbar = () => {
           <Link
             href="#home"
             to="home"
-            smooth
+            smooth={!reducedMotion}
             duration={600}
             hashSpy={false}
             className="hover-trigger cursor-pointer"
@@ -51,7 +73,7 @@ const Navbar = () => {
               <Link
                 href={`#${l}`}
                 to={l}
-                smooth
+                smooth={!reducedMotion}
                 spy
                 hashSpy={false}
                 duration={600}
@@ -75,7 +97,7 @@ const Navbar = () => {
         </div>
 
         <ThemeToggle />
-        <button aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(!open)} className="md:hidden text-white hover-trigger">
+        <button ref={menuButton} aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(!open)} className="md:hidden text-white hover-trigger w-11 h-11 flex items-center justify-center">
           {open ? <FiX size={22} /> : <FiMenu size={22} />}
         </button>
       </div>
@@ -85,14 +107,15 @@ const Navbar = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           id="mobile-navigation"
-          className="md:hidden bg-[#060908] border-t border-white/[0.06] px-8 py-8"
+          ref={menuPanel}
+          className="md:hidden bg-[#060908] border-t border-white/[0.06] px-8 py-6 max-h-[calc(100dvh-76px)] overflow-y-auto"
         >
           {links.map((l) => (
             <Link
               key={l}
               href={`#${l}`}
                 to={l}
-              smooth
+              smooth={!reducedMotion}
               duration={600}
               offset={-80}
               hashSpy={false}

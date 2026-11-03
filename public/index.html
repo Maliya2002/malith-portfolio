@@ -38,11 +38,6 @@
       history.scrollRestoration = 'manual';
     }
 
-    // Clear any hash from URL
-    if (window.location.hash) {
-      history.replaceState(null, null, window.location.pathname + window.location.search);
-    }
-
     // <body> does not exist yet inside <head> - only touch what is available.
     window.scrollTo(0, 0);
     if (document.documentElement) {

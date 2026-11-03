@@ -5,12 +5,6 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const testimonials = [
   {
-    text: "Malith is an incredibly talented developer with a strong grasp of modern web technologies. His attention to detail and commitment to quality is impressive.",
-    author: "Team Lead",
-    role: "Smart Campus Project",
-    color: "#a6ff00",
-  },
-  {
     text: "Working with Malith on the SLIIT LMS was a great experience. He delivered clean, efficient code and was always willing to help team members.",
     author: "Project Collaborator",
     role: "SLIIT LMS",

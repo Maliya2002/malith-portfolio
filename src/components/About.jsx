@@ -1,3 +1,4 @@
+import { projects } from "../data/projects";
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -12,10 +13,10 @@ const About = () => {
   });
 
  const stats = [
-  { num: "07+", label: "Projects", color: "#a6ff00" },   // ← 6 → 7
+  { num: String(projects.length).padStart(2, "0"), label: "Projects", color: "#a6ff00" },   // ← 6 → 7
   { num: "140+", label: "Commits", color: "#c0f65c" },
   { num: "12+", label: "Tech Stack", color: "#ec4899" }, // ← 10 → 12
-  { num: "02", label: "Live Apps", color: "#10b981" },
+  { num: String(projects.filter(project => project.live).length).padStart(2, "0"), label: "Live Apps", color: "#10b981" },
 ];
 
   return (
@@ -117,7 +118,7 @@ const About = () => {
                   {"\n  "}
                   <span className="text-slate-300">passion</span>
                   <span className="text-slate-500">: </span>
-                  <span className="text-green">"Clean code &"</span>
+                  <span className="text-green">"Clean code &" +</span>
                   {"\n            "}
                   <span className="text-green">"beautiful UI"</span>
                   {"\n"}

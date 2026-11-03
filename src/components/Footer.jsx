@@ -1,12 +1,14 @@
 import React from "react";
 import { FiGithub, FiLinkedin, FiMail, FiArrowUp } from "react-icons/fi";
 import MagneticLink from "./MagneticLink";
+import MMCodeCredit from "./MMCodeCredit";
 
 const Footer = () => {
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const behavior = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: behavior() });
 
   const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("contact")?.scrollIntoView({ behavior: behavior() });
   };
 
   return (
@@ -37,12 +39,12 @@ const Footer = () => {
 
           <div className="flex items-center gap-5">
             {[
-              { icon: <FiGithub size={16} />, link: "https://github.com/maliya2002" },
-              { icon: <FiLinkedin size={16} />, link: "https://www.linkedin.com/in/malith-madushan-a3a6b0263" },
-              { icon: <FiMail size={16} />, link: "mailto:malithmadushan25@gmail.com" },
+              { label: "GitHub", icon: <FiGithub size={16} />, link: "https://github.com/maliya2002" },
+              { label: "LinkedIn", icon: <FiLinkedin size={16} />, link: "https://www.linkedin.com/in/malith-madushan-a3a6b0263" },
+              { label: "Email Malith", icon: <FiMail size={16} />, link: "mailto:malithmadushan25@gmail.com" },
             ].map((s, i) => (
               <MagneticLink key={i} strength={0.3}>
-                <a href={s.link} target="_blank" rel="noreferrer"
+                <a href={s.link} aria-label={s.label} target="_blank" rel="noreferrer"
                   className="text-slate-500 hover:text-white transition-colors duration-500 hover-trigger">
                   {s.icon}
                 </a>
@@ -50,11 +52,12 @@ const Footer = () => {
             ))}
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap justify-center items-center gap-4">
+            <MMCodeCredit />
             <p className="text-slate-600 text-[10px] font-mono tracking-wider">
               © {new Date().getFullYear()} Malith Madushan
             </p>
-            <button onClick={scrollTop} className="text-slate-500 hover:text-white transition-colors hover-trigger">
+            <button aria-label="Back to top" onClick={scrollTop} className="text-slate-500 hover:text-white transition-colors hover-trigger">
               <FiArrowUp size={14} />
             </button>
           </div>

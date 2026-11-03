@@ -41,7 +41,7 @@ export default function Hero() {
         <div className="hero-profile" onPointerMove={tilt} onPointerLeave={resetTilt}>
           <div className="profile-tech-badge badge-react" aria-hidden="true">⚛ <span>React</span></div>
           <div className="profile-tech-badge badge-node" aria-hidden="true">&lt;/&gt; <span>Full-stack</span></div>
-          <div className="profile-image"><img src="/malith.png" alt="Malith Madushan" width="640" height="720" fetchpriority="high" /></div>
+          <div className="profile-image"><img src="/malith-640.webp" srcSet="/malith-640.webp 640w, /malith-960.webp 960w" sizes="(max-width: 767px) calc(100vw - 48px), 440px" alt="Malith Madushan" width="640" height="720" fetchpriority="high" /></div>
           <div className="profile-caption"><div><strong>Malith Madushan</strong><span>Full-stack developer · IT undergraduate</span></div><span className="profile-mark" aria-hidden="true">&lt;/&gt;</span></div>
         </div>
         <div className="portrait-code" aria-hidden="true"><div><i /><i /><i /><span>developer.ts</span></div><code><span>const</span> developer = &#123;<br />&nbsp; name: <b>"Malith"</b>,<br />&nbsp; focus: <b>"Full-stack"</b>,<br />&nbsp; next: <b>"Your team"</b><br />&#125;;</code></div>

@@ -27,14 +27,10 @@ import Footer from "./components/Footer";
 function App() {
   const [loading, setLoading] = useState(true);
 
-  // Every visit starts on the hero, never on a restored / anchored position.
+  // Start unlinked visits at the hero, while preserving shared section links.
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
-    }
-
-    if (window.location.hash) {
-      window.history.replaceState(null, null, window.location.pathname + window.location.search);
     }
 
     lockScroll();
@@ -51,8 +47,17 @@ function App() {
     // images decode and the in-view animations fire, so the viewport is held at
     // the top until the layout stops moving.
     setLoading(false);
-    pinTopUntilStable();
   }, []);
+
+  useEffect(() => {
+    if (loading) return;
+    const target = document.getElementById(window.location.hash.slice(1));
+    if (target) {
+      target.scrollIntoView({ behavior: "auto" });
+      return;
+    }
+    return pinTopUntilStable();
+  }, [loading]);
 
   if (loading) {
     return <Loader onComplete={handleLoaderComplete} />;

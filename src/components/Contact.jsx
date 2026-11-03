@@ -10,7 +10,6 @@ const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [deliveryDetails, setDeliveryDetails] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +19,6 @@ const Contact = () => {
     }
     sendingRef.current = true;
     setErrorMessage("");
-    setDeliveryDetails("");
     setStatus("sending");
 
     try {
@@ -32,7 +30,6 @@ const Contact = () => {
     } catch (error) {
       console.error("Contact delivery failed:", { status: error?.status, text: error?.text || error?.message });
       setErrorMessage(contactErrorMessage(error));
-      setDeliveryDetails([error?.status, error?.text || error?.message].filter(Boolean).join(" — ").slice(0, 300));
       setStatus("error");
     } finally {
       sendingRef.current = false;
@@ -85,7 +82,7 @@ const Contact = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-slate-500 text-[10px] font-mono tracking-[0.2em] uppercase mb-1">{s.label}</p>
-                  <p className="text-slate-200 text-sm font-semibold truncate group-hover:text-white transition-colors flex items-center gap-2">
+                  <p className="text-slate-200 text-sm font-semibold group-hover:text-white transition-colors flex items-center gap-2">
                     {s.value}
                     <FiArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-all flex-shrink-0" />
                   </p>
@@ -133,7 +130,6 @@ const Contact = () => {
                   </div>
                   <h4 className="font-display text-xl font-bold text-white mb-2">Couldn't send</h4>
                   <p className="text-slate-400 text-sm">{errorMessage}</p>
-                  {deliveryDetails && <details className="mt-3 text-xs text-slate-400 break-words"><summary className="cursor-pointer">Delivery details</summary><p className="mt-2">{deliveryDetails}</p></details>}
                 </motion.div>
               )}
 
@@ -146,6 +142,8 @@ const Contact = () => {
                         type="text"
                         id="contact-name"
                         name="name"
+                        autoComplete="name"
+                        maxLength={100}
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
                         placeholder="Your name"
@@ -160,6 +158,8 @@ const Contact = () => {
                         type="email"
                         id="contact-email"
                         name="email"
+                        autoComplete="email"
+                        maxLength={254}
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
                         placeholder="your@email.com"
@@ -173,6 +173,7 @@ const Contact = () => {
                     <label htmlFor="contact-message" className="text-slate-500 text-[10px] font-mono tracking-[0.2em] mb-3 block uppercase">Message</label>
                     <textarea
                       id="contact-message"
+                      maxLength={5000}
                         name="message"
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}

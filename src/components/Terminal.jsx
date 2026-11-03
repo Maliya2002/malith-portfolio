@@ -1,3 +1,4 @@
+import { projects } from "../data/projects";
 import { downloadResume } from "../utils/resume";
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
@@ -21,7 +22,7 @@ export const terminalInfo = {
   date      - Current local date and time
   echo TEXT - Print text
   history   - Previous commands
-  open NAME - github, linkedin, website, lms, buddhist
+  open NAME - github, linkedin, website, lms, buddhist, cricavo, goldenstar
   goto NAME - home, about, skills, work, contact
   Tab       - Complete command; Up/Down - command history`,
 
@@ -36,11 +37,7 @@ Backend:  Node.js, Express, PHP
 Database: MongoDB, MySQL, PostgreSQL
 Tools:    Git, GitHub, VS Code, Figma`,
 
-  projects: `1. Upul Stores POS - Enterprise POS System
-2. UNISLOT - University Scheduling
-3. SLIIT LMS - Learning Management (Live)
-4. Buddhist Center - Community Website (Live)
-5. Smart Campus - Campus Management`,
+  projects: projects.map((project, i) => `${i + 1}. ${project.title}${project.live ? " (Live)" : ""}`).join("\n"),
 
   contact: `Email:    malithmadushan25@gmail.com
 GitHub:   github.com/maliya2002

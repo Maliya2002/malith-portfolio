@@ -1,88 +1,7 @@
 import React from "react";
 import { FiGithub, FiExternalLink, FiArrowUpRight } from "react-icons/fi";
 
-const projects = [
-  {
-    num: "01",
-    title: "Upul Stores POS",
-    preview: "upul-pos",
-    previewAlt: "Custom Upul Stores POS artwork with a checkout terminal, barcode scanner and retail products",
-    previewCaption: "Custom project artwork",
-    desc: "Enterprise-grade Smart Point of Sale system with AI insights, inventory management, multi-role authentication, and PWA support for retail businesses.",
-    tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "NextAuth"],
-    github: "https://github.com/Maliya2002/upul-stores-pos",
-    live: null,
-    color: "#10b981",
-  },
-  {
-    num: "02",
-    title: "Cricavo",
-    preview: "cricavo",
-    previewAlt: "Cricavo overview with match navigation, Start a match button and match totals",
-    desc: "A Sinhala/English cricket scoring app with ball-by-ball scoring, scorecards, match history and offline browser storage. Includes undo and JSON backup/restore for locally saved matches.",
-    tech: ["JavaScript", "IndexedDB", "PWA", "Supabase"],
-    github: "https://github.com/Maliya2002/cricavo",
-    live: "https://cricavo.vercel.app",
-    color: "#beff3e",
-  },
-  {
-    num: "03",
-    title: "UNISLOT",
-    preview: "unislot",
-    previewAlt: "Custom UNISLOT artwork illustrating academic timetables and university resource scheduling",
-    previewCaption: "Custom project artwork",
-    desc: "University academic scheduling and resource management system.",
-    tech: ["React", "Node.js", "MongoDB"],
-    github: "https://github.com/kezu1003/UNISLOT---University-Academic-Scheduling-Resource-Management-System",
-    live: null,
-    color: "#a6ff00",
-  },
-  {
-    num: "04",
-    title: "SLIIT LMS",
-    preview: "sliit-lms",
-    previewAlt: "SLIIT LMS public homepage with learning platform introduction and sign-in links",
-    desc: "Full-featured learning management system for university students and staff.",
-    tech: ["React", "Node.js", "MongoDB"],
-    github: "https://github.com/Maliya2002/sliit-lms",
-    live: "https://sliit-lms.vercel.app/",
-    color: "#c0f65c",
-  },
-  {
-    num: "05",
-    title: "Buddhist Center",
-    preview: "buddhist-center",
-    previewAlt: "Boraluketiya Buddhist Center public website homepage and navigation",
-    desc: "Official website for Boraluketiya Buddhist Center with cultural content.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    github: "https://github.com/Maliya2002/boraluketiya-buddhist-center",
-    live: "https://boraluketiya-buddhist-center.vercel.app/",
-    color: "#ec4899",
-  },
-  {
-    num: "06",
-    title: "Smart Campus",
-    preview: "smart-campus",
-    previewAlt: "Custom Smart Campus artwork illustrating connected university buildings and campus services",
-    previewCaption: "Custom project artwork",
-    desc: "Digital campus management solution for university operations.",
-    tech: ["React", "JavaScript", "Node.js"],
-    github: "https://github.com/Maliya2002/it3030-paf-2026-smart-campus-group89",
-    live: null,
-    color: "#a3f50b",
-  },
-  {
-    num: "07",
-    title: "GoldenStar Sports Club",
-    preview: "goldenstar",
-    previewAlt: "GoldenStar Sports Club public homepage with club navigation and cricket club introduction",
-    desc: "A website for GoldenStar Sports Club with player profiles, match fixtures, results, announcements and an admin area for club content.",
-    tech: ["Next.js", "TypeScript", "MongoDB", "NextAuth"],
-    github: "https://github.com/Maliya2002/GoldenStar-Sports-Club",
-    live: "https://golden-star-sports-club.vercel.app",
-    color: "#e5bd60",
-  },
-];
+import { projects } from "../data/projects";
 
 const Work = () => (
   <section id="work" className="py-40 border-b border-white/[0.05]">
@@ -93,7 +12,7 @@ const Work = () => (
           <article key={p.num} className={i === 0 ? "project-card project-featured" : "project-card"}>
             <div className="project-top"><span>{i === 0 ? "FEATURED PROJECT" : "PROJECT " + p.num}</span><span className="project-status">{p.live ? "Live demo available" : "Source code available"}</span></div>
             {p.preview && <a className="project-preview" href={p.live || "/projects/" + p.preview + "-1440.webp"} target="_blank" rel="noreferrer" aria-label={p.live ? "Explore " + p.title + " live website" : "View " + p.title + " project artwork"}>
-              <img src={"/projects/" + p.preview + "-720.webp"} srcSet={"/projects/" + p.preview + "-720.webp 720w, /projects/" + p.preview + "-1440.webp 1440w"} sizes="(max-width: 767px) calc(100vw - 98px), (max-width: 1280px) calc(50vw - 102px), 538px" width="1440" height="900" loading="lazy" decoding="async" alt={p.previewAlt} />
+              <img src={"/projects/" + p.preview + "-720.webp"} srcSet={"/projects/" + p.preview + "-720.webp 720w, /projects/" + p.preview + "-1440.webp 1440w"} sizes={i === 0 ? "(max-width: 767px) calc(100vw - 98px), (max-width: 1023px) calc(100vw - 126px), 660px" : "(max-width: 767px) calc(100vw - 98px), (max-width: 1280px) calc(50vw - 102px), 538px"} width="1440" height="900" loading="lazy" decoding="async" alt={p.previewAlt} />
               <span className="project-preview-caption">{p.previewCaption || "Live website preview"} <FiArrowUpRight aria-hidden="true" /></span>
             </a>}
             <h3>{p.title}</h3><p className="project-description">{p.desc}</p>

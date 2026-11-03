@@ -15,7 +15,7 @@ const CurrentTime = () => {
   }, []);
 
   return (
-    <span className="text-white/10 text-[10px] font-mono tracking-wider hidden lg:block">
+    <span className="text-slate-400 text-[11px] font-mono tracking-wider hidden lg:block">
       SL — {time}
     </span>
   );
