@@ -6,33 +6,31 @@
     "CI": "false",
     "GENERATE_SOURCEMAP": "false"
   },
-  "headers": [
+  "framework": null,
+  "routes": [
     {
-      "headers": [
-        {
-          "value": "application/pdf",
-          "key": "Content-Type"
-        },
-        {
-          "value": "attachment; filename=\"Malith_Madushan_CV.pdf\"",
-          "key": "Content-Disposition"
-        }
-      ],
-      "source": "/Malith_Madushan_Resume.pdf"
+      "src": "/Malith_Madushan_Resume\\.pdf",
+      "headers": {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": "attachment; filename=\"Malith_Madushan_CV.pdf\""
+      },
+      "continue": true
     },
     {
-      "headers": [
-        {
-          "value": "application/pdf",
-          "key": "Content-Type"
-        },
-        {
-          "value": "attachment; filename=\"Malith_Madushan_CV.pdf\"",
-          "key": "Content-Disposition"
-        }
-      ],
-      "source": "/Malith_Madushan_CV.pdf"
+      "src": "/Malith_Madushan_CV\\.pdf",
+      "headers": {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": "attachment; filename=\"Malith_Madushan_CV.pdf\""
+      },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "status": 404,
+      "dest": "/404.html"
     }
-  ],
-  "framework": null
+  ]
 }
